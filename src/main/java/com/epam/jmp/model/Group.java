@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.epam.jmp.model.enums.Status;
 
-public class Group {
+public class Group extends AbstractEntity {
 
 	private Person mentor;
 	private Person mentee;

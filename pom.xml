@@ -53,7 +53,17 @@
 			<source>${jdk.version}</source>
 			<target>${jdk.version}</target>
 		</configuration>
-	</plugin>
+	  </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+              <warSourceDirectory>src/main/webapp</warSourceDirectory>
+              <warName>JMP</warName>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+       </plugin>
     </plugins>
   </build>
 </project>

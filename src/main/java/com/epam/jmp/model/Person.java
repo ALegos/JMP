@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.epam.jmp.model.enums.Level;
 
-public class Person {
+public class Person extends AbstractEntity {
 	private String name;
 	private String email;
 	private Level level;
@@ -48,8 +48,6 @@ public class Person {
 		this.birgthDate = birgthDate;
 	}
 	private Date birgthDate;
-	
-	
 	
 }
 

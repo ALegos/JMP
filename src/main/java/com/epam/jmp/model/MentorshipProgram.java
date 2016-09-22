@@ -3,7 +3,7 @@ package com.epam.jmp.model;
 import java.util.Date;
 import java.util.List;
 
-public class MentorshipProgram {
+public class MentorshipProgram  extends AbstractEntity{
 
 	private String name;
 	private String officeLocation;

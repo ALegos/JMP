@@ -4,7 +4,7 @@ import java.time.Duration;
 
 import com.epam.jmp.model.enums.Status;
 
-public class Lecture {
+public class Lecture extends AbstractEntity{
 	private String domainArea;
 	private String topic;
 	private Person lector;

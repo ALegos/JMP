@@ -1,6 +1,6 @@
 package com.epam.jmp.model.enums;
 
-public enum ParticiantAssigmentStatus {
+public enum ParticipantAssignmentStatus {
 	PROPOSED,
 	APPROVED_RM,
 	CONFIRMED_CDP,
