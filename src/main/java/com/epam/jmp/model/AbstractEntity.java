@@ -4,21 +4,21 @@ import java.util.UUID;
 
 public abstract class AbstractEntity {
 	
-	private long uid;
+	private String uid;
 	
 	public AbstractEntity() {
 	}
 		
-	public long getUid() {
+	public String getUid() {
 		return uid;
 	}
 
-	public void setUid(long uid) {
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 	
-	public long generateUid(){
-		this.setUid(UUID.randomUUID().node());
+	public String generateUid(){
+		this.setUid(UUID.randomUUID().toString());
 		return this.getUid();
 	}
 
