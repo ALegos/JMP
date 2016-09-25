@@ -14,6 +14,7 @@ public class Person extends AbstractEntity {
 	private Level level;
 	private String primarySkill;
 	private Manager manager;
+	private Date birthDate;
 
 	public String getName() {
 		return this.name;
@@ -65,6 +66,14 @@ public class Person extends AbstractEntity {
 
 	public void setBirgthDate(Date birgthDate) {
 		this.birgthDate = birgthDate;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	private Date birgthDate;

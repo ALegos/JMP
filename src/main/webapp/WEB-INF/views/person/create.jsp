@@ -14,19 +14,26 @@
            <tr>
                <td><form:label path="name">Name</form:label></td>
                <td><form:input path="name"/></td>
+               <td><form:errors path="name" cssStyle="color:red;"/></td>
            </tr>
            <tr>
                <td><form:label path="email">Email</form:label></td>
                <td><form:input path="email"/></td>
+               <td><form:errors path="email" cssStyle="color:red;"/></td>
            </tr>
            <tr>
                <td><form:label path="level">Level</form:label></td>
                <td><form:input path="level"/></td>
+               <td><form:errors path="level" cssStyle="color:red;"/></td>
            </tr>
            <tr>
                <td><form:label path="primarySkill">Primary Skill</form:label></td>
                <td><form:input path="primarySkill"/></td>
            </tr>
+           <tr>
+               <td><form:label path="primarySkill">Primary Skill</form:label></td>
+               <td><form:input path="primarySkill"/></td>
+           </tr>           
            <tr>
                <td><input type="submit" value="Submit"/></td>
            </tr>
