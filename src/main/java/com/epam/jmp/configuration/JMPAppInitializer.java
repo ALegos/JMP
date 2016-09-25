@@ -10,7 +10,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class JMPAppInitializer implements WebApplicationInitializer {
 
-	@Override
 	public void onStartup(ServletContext container) throws ServletException {
 
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
