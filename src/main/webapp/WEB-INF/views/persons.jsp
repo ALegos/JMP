@@ -18,7 +18,8 @@
 				<th>Name</th>
 				<th>Email</th>
 				<th>Level</th>
-				<th>Primary sklill</th>
+				<th>Primary skill</th>
+				<th>Birth date</th>
 			</tr>
 		</thead>
 
@@ -31,7 +32,8 @@
 			<td>${person.email}</td>
 			<td>${person.level}</td>
 			<td>${person.primarySkill}</td>
-
+			<td>${person.birthDate}</td>
+			<td></td>
 		    </tr>
 		</c:forEach>
 	</table>

@@ -31,8 +31,9 @@
                <td><form:input path="primarySkill"/></td>
            </tr>
            <tr>
-               <td><form:label path="primarySkill">Primary Skill</form:label></td>
-               <td><form:input path="primarySkill"/></td>
+               <td><form:label path="birthDate">Birth Date</form:label></td>
+               <td><form:input path="birthDate"/></td>
+               <td><form:errors path="birthDate" cssStyle="color:red;"/></td>
            </tr>           
            <tr>
                <td><input type="submit" value="Submit"/></td>
