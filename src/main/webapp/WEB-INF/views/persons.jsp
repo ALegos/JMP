@@ -6,11 +6,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="../resources/css/person.css">
+
+
+<script src="../resources/js/person.js"></script>
+
 </head>
 <body>
 	
 	<h1>All Users</h1>
-	
+	<br/>
+	<br/>
+	<a href="create">CREATE NEW USER</a>
+	<br/>
+	<br/>	
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -33,11 +43,9 @@
 			<td>${person.level}</td>
 			<td>${person.primarySkill}</td>
 			<td>${person.birthDate}</td>
-			<td></td>
+			<td><button onclick="deletePerson(this,'${person.uid}');">DELETE</button></td>
 		    </tr>
 		</c:forEach>
 	</table>
-	
-	
 </body>
 </html>
