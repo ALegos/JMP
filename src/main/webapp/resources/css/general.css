@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+.margin-right-reset{
+	margin-right: 0;
+}
+
+.navbar.navbar-inverse .collapse li.active a{
+	background-color: #555;
+}

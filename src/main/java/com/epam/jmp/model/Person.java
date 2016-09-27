@@ -15,67 +15,59 @@ public class Person extends AbstractEntity {
 	private String primarySkill;
 	private Manager manager;
 	private Date birthDate;
-
+	
 	public String getName() {
 		return this.name;
 	}
-
+	
 	@XmlElement
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getEmail() {
 		return this.email;
 	}
-
+	
 	@XmlElement
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public Level getLevel() {
 		return this.level;
 	}
-
+	
 	@XmlElement
 	public void setLevel(Level level) {
 		this.level = level;
 	}
-
+	
 	public String getPrimarySkill() {
 		return this.primarySkill;
 	}
-
+	
 	@XmlElement
 	public void setPrimarySkill(String primarySkill) {
 		this.primarySkill = primarySkill;
 	}
-
+	
 	public Manager getManager() {
 		return this.manager;
 	}
-
+	
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
-
-	public Date getBirgthDate() {
-		return this.birgthDate;
-	}
-
-	public void setBirgthDate(Date birgthDate) {
-		this.birgthDate = birgthDate;
-	}
-
+	
 	public Date getBirthDate() {
 		return birthDate;
 	}
-
+	
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-
+	
 	private Date birgthDate;
-
+	
 }
