@@ -5,6 +5,7 @@ import static com.epam.jmp.controller.ControllerConstants.PERSON_API_MAPPING;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.epam.jmp.model.Person;
@@ -45,6 +47,19 @@ public class PersonController {
 			return new ResponseEntity<List<Person>>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<List<Person>>(persons, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, params = "email")
+	public ResponseEntity<Person> findByEmail(@RequestParam("email") String email) {
+		// TODO remove sysout
+		System.out.println("Fetching Persons with email " + email);
+		Optional<Person> person = personService.findByEmail(email);
+		if (!person.isPresent()) {
+			// TODO remove sysout
+			System.out.println("Person with email " + email + " not found");
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Person>(person.get(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.GET)

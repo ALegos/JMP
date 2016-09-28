@@ -6,4 +6,6 @@ public class ControllerConstants {
 	
 	public static final String PERSON_API_MAPPING = API_BASE_URL + "/person";
 	
+	public static final String PROGRAM_API_MAPPING = API_BASE_URL + "/program";
+	
 }

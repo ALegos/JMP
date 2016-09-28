@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Persons</title>
+<title>Insert title here</title>
 
 <link rel="stylesheet" type="text/css" href="resources/css/person.css">
 <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/css/general.css">
 
 <script src="resources/js/jquery-3.1.1.min.js"></script>
-<script src="resources/js/person.js"></script>
+<script src="resources/js/program.js"></script>
 <script src="resources/js/bootstrap.js"></script>
 
 </head>
@@ -28,8 +28,8 @@
 			    </div>
 			    <div class="collapse navbar-collapse">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="persons">Persons<span class="sr-only">(current)</span></a></li>
-			        <li><a href="programs">Programs</a></li>
+			        <li><a href="persons">Persons</a></li>
+			        <li class="active"><a href="programs">Programs<span class="sr-only">(current)</span></a></li>
 			      </ul>
 			      <div class="navbar-right margin-right-reset">
 						  <button type="button" class="btn btn-default navbar-btn ">Sign in</button>
@@ -37,46 +37,36 @@
 			    </div>  
 			  </div>
 	    </nav>
-			<h1>All Persons</h1>
-			
+			<h1>All Programs</h1>
 			<br/>	
 			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th>#ID</th>
 						<th>Name</th>
-						<th>Email</th>
-						<th>Level</th>
-						<th>Primary skill</th>
-						<th>Birth date</th>
+						<th>Location</th>
+						<th>Start date</th>
+						<th>End date</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 		
-				<c:forEach var="person" items="${persons}">
+				<c:forEach var="program" items="${programs}">
 				    <tr>
-					<td>${person.uid}</td>
-					<td>${person.name}</td>
-					<td>${person.email}</td>
-					<td>${person.level}</td>
-					<td>${person.primarySkill}</td>
-					<td>${person.birthDate}</td>
+					<td>${program.uid}</td>
+					<td>${program.name}</td>
+					<td>${program.officeLocation}</td>
+					<td>${program.startDate}</td>
+					<td>${program.endDate}</td>
 					<td><button class="btn btn-info" onclick="">Update</button>
-					<button class="btn btn-danger" onclick="deletePerson(this,'${person.uid}');">Delete</button></td>
+					<button class="btn btn-danger" onclick="deleteProgram(this,'${program.uid}');">Delete</button></td>
 				    </tr>
 				</c:forEach>
 			</table>
 	  
 	  
-	  
-	  
-	  
-	  
 	  </div>
 	</div>
-	
-	
-	
-	
 	
 </body>
 </html>

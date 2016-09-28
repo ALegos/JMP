@@ -3,9 +3,9 @@
  */
 
 
-function deletePerson(el, uid){
+function deleteProgram(el, uid){
 	var xhr = new XMLHttpRequest();
-	xhr.open("DELETE", "api/person/"+uid, false);
+	xhr.open("DELETE", "api/program/"+uid, false);
 	xhr.send();
 	
     if (xhr.status == 204) {
