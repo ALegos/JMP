@@ -32,9 +32,10 @@ public class JMPConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.APPLICATION_JSON)
-				.defaultContentTypeStrategy(new UrlBasedContentNegotiationStrategy())
-				.mediaType("json", MediaType.APPLICATION_JSON).mediaType("xml", MediaType.APPLICATION_XML);
+		configurer.ignoreAcceptHeader(true)
+		.defaultContentType(MediaType.APPLICATION_JSON)
+		.mediaType("json", MediaType.APPLICATION_JSON).mediaType("xml", MediaType.APPLICATION_XML)
+		.defaultContentTypeStrategy(new UrlBasedContentNegotiationStrategy());
 	}
 	
 	@Bean
@@ -47,7 +48,7 @@ public class JMPConfiguration extends WebMvcConfigurerAdapter {
 		
 		resolvers.add(jsonViewResolver());
 		resolvers.add(jaxb2MarshallingXmlViewResolver());
-		resolver.setOrder(1);
+		resolvers.add(jspViewResolver());
 		resolver.setViewResolvers(resolvers);
 		return resolver;
 	}
@@ -80,7 +81,6 @@ public class JMPConfiguration extends WebMvcConfigurerAdapter {
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
-		viewResolver.setOrder(2);
 		return viewResolver;
 	}
 	
