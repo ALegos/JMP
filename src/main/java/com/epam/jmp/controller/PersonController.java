@@ -1,20 +1,17 @@
 package com.epam.jmp.controller;
 
-import static com.epam.jmp.controller.ControllerConstants.PERSON_API_MAPPING;
+import static com.epam.jmp.constants.ControllerConstants.PERSON_API_MAPPING;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +21,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.epam.jmp.model.Person;
 import com.epam.jmp.service.PersonService;
-import com.epam.jmp.validators.EmailValidator;
 import com.epam.jmp.validators.PersonValidator;
 
 @Controller
@@ -33,9 +29,6 @@ public class PersonController {
 	
 	@Autowired
 	public PersonValidator personValidator;
-	
-	@Autowired
-	public EmailValidator emailValidator;
 	
 	@Autowired
 	public PersonService personService;
@@ -77,7 +70,7 @@ public class PersonController {
 	
 	// TODO User validation
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> createPerson(@RequestBody Person person, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> createPerson(@RequestBody @Valid Person person, UriComponentsBuilder ucBuilder) {
 		// TODO remove sysout
 		System.out.println("Creating Person " + person.getName());
 		if (personService.isPersonExist(person)) {
@@ -92,7 +85,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.PUT)
-	public ResponseEntity<Person> updatePerson(@PathVariable("uid") String uid, @RequestBody Person person) {
+	public ResponseEntity<Person> updatePerson(@PathVariable("uid") String uid, @RequestBody @Valid Person person) {
 		// TODO remove sysout
 		System.out.println("Updating Person " + uid);
 		Person currentPerson = personService.getByUid(uid);
@@ -127,14 +120,6 @@ public class PersonController {
 		
 		personService.delete(uid);
 		return new ResponseEntity<Person>(HttpStatus.NO_CONTENT);
-	}
-	
-	@InitBinder
-	public void dataBinding(WebDataBinder binder) {
-		binder.addValidators(this.personValidator, this.emailValidator);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, "birthDate", new CustomDateEditor(dateFormat, true));
 	}
 	
 }

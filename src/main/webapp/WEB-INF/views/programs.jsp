@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,8 +38,7 @@
 			    </div>  
 			  </div>
 	    </nav>
-			<h1>All Programs</h1>
-			<br/>	
+			<h1 class="page-name-header">All Programs</h1>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -56,8 +56,8 @@
 					<td>${program.uid}</td>
 					<td>${program.name}</td>
 					<td>${program.officeLocation}</td>
-					<td>${program.startDate}</td>
-					<td>${program.endDate}</td>
+					<td><fmt:formatDate pattern="${dateFormatPattern}" value="${program.startDate}"/></td>
+					<td><fmt:formatDate pattern="${dateFormatPattern}" value="${program.endDate}"/></td>
 					<td><button class="btn btn-info" onclick="">Update</button>
 					<button class="btn btn-danger" onclick="deleteProgram(this,'${program.uid}');">Delete</button></td>
 				    </tr>

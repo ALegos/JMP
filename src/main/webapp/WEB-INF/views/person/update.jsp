@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Create Person</title>
+<title>Update Person</title>
 
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/person.css">
@@ -44,9 +44,9 @@
 				</div>
 			</div>
 			</nav>
-			<h1 class="page-name-header">Create Person</h1>
+			<h1 class="page-name-header">Update Person</h1>
 
-			<form:form method="POST" action="create" modelAttribute="person"
+			<form:form method="POST" action="${person.uid}" modelAttribute="person"
 				class="form-horizontal">
 				<div class="form-group">
 					<form:label path="name" class="col-sm-2 control-label">Name</form:label>
@@ -98,7 +98,7 @@
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-5">
 						<div class="navbar-right margin-right-reset">
-							<button type="submit" class="btn btn-primary text-rigth">Create Person</button>
+							<button type="submit" class="btn btn-primary text-rigth">Update Person</button>
 						</div>
 					</div>
 				</div>

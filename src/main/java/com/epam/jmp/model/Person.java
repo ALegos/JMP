@@ -1,19 +1,33 @@
 package com.epam.jmp.model;
 
+import static com.epam.jmp.constants.UtilConstants.DATE_FORMAT_PATTERN;
+
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.epam.jmp.model.enums.Level;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @XmlRootElement
 public class Person extends AbstractEntity {
+	@NotEmpty(message = "Please enter name")
+	@Size(min = 5, message = "Name should be between 6 and 15 characters")
 	private String name;
+	@NotEmpty(message = "Please enter email")
+	@Email(message = "Email is not valid")
 	private String email;
 	private Level level;
 	private String primarySkill;
 	private Manager manager;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT_PATTERN)
+	@NotNull
 	private Date birthDate;
 	
 	public String getName() {
@@ -64,10 +78,8 @@ public class Person extends AbstractEntity {
 		return birthDate;
 	}
 	
+	@XmlElement
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	
-	private Date birgthDate;
-	
 }

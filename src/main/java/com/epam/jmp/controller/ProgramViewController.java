@@ -1,5 +1,9 @@
 package com.epam.jmp.controller;
 
+import static com.epam.jmp.constants.UtilConstants.DATE_FORMAT_PATTERN;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +32,7 @@ public class ProgramViewController {
 			ModelMap modelMap) {
 		programService.create(program);
 		if (bindingResult.hasErrors()) {
-			return "create";
+			return "person/create";
 		} else {
 			return "redirect:/programs";
 		}
@@ -36,6 +40,7 @@ public class ProgramViewController {
 	
 	@RequestMapping(value = "/programs", method = RequestMethod.GET)
 	public String showAllPerson(Model model) {
+		model.addAttribute("dateFormatPattern", DATE_FORMAT_PATTERN);
 		model.addAttribute("programs", programService.getAll());
 		return "programs";
 	}
@@ -44,22 +49,22 @@ public class ProgramViewController {
 	private void init() {
 		MentorshipProgram m1 = new MentorshipProgram();
 		m1.setName("Javascript program");
-		m1.setStartDate(new Date(2016, 9, 27));
-		m1.setEndDate(new Date(2016, 12, 10));
+		m1.setStartDate(Date.from(LocalDate.of(2016, 9, 27).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		m1.setEndDate(Date.from(LocalDate.of(2016, 12, 10).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 		m1.setOfficeLocation("Lviv");
 		m1.setGroups(null);
 		
 		MentorshipProgram m2 = new MentorshipProgram();
 		m2.setName("PHP for beginers");
-		m2.setStartDate(new Date(2016, 10, 1));
-		m2.setEndDate(new Date(2016, 11, 13));
+		m2.setStartDate(Date.from(LocalDate.of(2016, 10, 1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		m2.setEndDate(Date.from(LocalDate.of(2016, 11, 13).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 		m2.setOfficeLocation("Kyiv");
 		m2.setGroups(null);
 		
 		MentorshipProgram m3 = new MentorshipProgram();
 		m3.setName("PHP basics");
-		m3.setStartDate(new Date(2016, 7, 4));
-		m3.setEndDate(new Date(2016, 11, 29));
+		m3.setStartDate(Date.from(LocalDate.of(2016, 7, 4).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		m3.setEndDate(Date.from(LocalDate.of(2016, 11, 29).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 		m3.setOfficeLocation("Lviv");
 		m3.setGroups(null);
 		

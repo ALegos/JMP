@@ -1,6 +1,6 @@
 package com.epam.jmp.controller;
 
-import static com.epam.jmp.controller.ControllerConstants.PROGRAM_API_MAPPING;
+import static com.epam.jmp.constants.ControllerConstants.PROGRAM_API_MAPPING;
 
 import java.util.List;
 

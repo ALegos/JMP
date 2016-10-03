@@ -7,3 +7,7 @@
 .navbar.navbar-inverse .collapse li.active a{
 	background-color: #555;
 }
+
+.page-name-header{
+	padding: 20px;
+}

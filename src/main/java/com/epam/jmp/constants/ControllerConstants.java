@@ -1,4 +1,4 @@
-package com.epam.jmp.controller;
+package com.epam.jmp.constants;
 
 public class ControllerConstants {
 	

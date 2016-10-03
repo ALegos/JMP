@@ -9,16 +9,19 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
 		<springframework.version>4.3.2.RELEASE</springframework.version>
 		<servletapi.version>3.1.0</servletapi.version>
 		<jstl.version>1.2</jstl.version>
-		<jackson.databind.version>2.4.1.3</jackson.databind.version>
-		<jackson.annotations.version>2.4.1</jackson.annotations.version>
+		<jackson.databind.version>2.8.2</jackson.databind.version>
 		<validation.api.version>1.1.0.Final</validation.api.version>
-		<junit.version>3.8.1</junit.version>
+		<junit.version>4.12</junit.version>
 		<apache.common.version>3.0</apache.common.version>
-		<aspectj.version>1.8.9</aspectj.version>
+		<aspectj.version>1.8.7</aspectj.version>
+		<logback.version>1.1.7</logback.version>
+		<jcl.slf4j.version>1.7.21</jcl.slf4j.version>
+		<hibernate.validator>5.2.4.Final</hibernate.validator>
 	</properties>
 
 	<dependencies>
@@ -26,8 +29,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${springframework.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
 
 		<!-- Needed for XML View (with JAXB2) -->
 		<dependency>
@@ -46,10 +54,11 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId> 
+			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
 
@@ -60,11 +69,6 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.databind.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.annotations.version}</version>
-		</dependency>
 
 		<!-- Validation -->
 
@@ -73,7 +77,13 @@
 			<artifactId>validation-api</artifactId>
 			<version>${validation.api.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validator}</version>
+		</dependency>
 
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -96,6 +106,25 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${jcl.slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
 
 		<!-- UTILS -->
 
@@ -109,6 +138,15 @@
 	<build>
 		<finalName>JMP-portal</finalName>
 		<plugins>
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>aspectj-maven-plugin</artifactId> 
+				<version>1.4</version> <configuration> <showWeaveInfo>true</showWeaveInfo> 
+				<source>${jdk.version}</source> <target>${jdk.version}</target> <Xlint>ignore</Xlint> 
+				<complianceLevel>${jdk.version}</complianceLevel> <verbose>true</verbose> 
+				</configuration> <executions> <execution> <phase>process-sources</phase> 
+				<goals> <goal>compile</goal> <goal>test-compile</goal> </goals> </execution> 
+				</executions> <dependencies> <dependency> <groupId>org.aspectj</groupId> 
+				<artifactId>aspectjtools</artifactId> <version>${aspectj.version}</version> 
+				</dependency> </dependencies> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
