@@ -56,7 +56,7 @@ public class PersonViewController {
 	}
 	
 	@RequestMapping(value = "/person/{uid}", method = RequestMethod.GET)
-	public String getUser(@PathVariable("uid") String uid, Model model) {
+	public String updatePerson(@PathVariable("uid") String uid, Model model) {
 		Person person = personService.getByUid(uid);
 		if (person != null) {
 			model.addAttribute("person", person);

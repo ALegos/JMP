@@ -1,16 +1,22 @@
 package com.epam.jmp.aop;
 
 import java.util.Arrays;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.epam.jmp.model.AbstractEntity;
 
 @Aspect
 // @Configurable
@@ -23,33 +29,37 @@ public class JMPAspect {
 	public void inDAOLayer() {
 	}
 	
-	// @Before("com.epam.jmp.controller.PersonViewController.createPerson() &&
-	// args(request,..)")
-	// public void logEntityCreate(HttpServletRequest request, JoinPoint
-	// joinPoint) {
-	// AbstractEntity person = (AbstractEntity) joinPoint.getArgs()[0];
-	// person.setDateCreated(new Date());
-	// String ipAddress = request.getHeader("X-FORWARDED-FOR");
-	// if (ipAddress == null) {
-	// ipAddress = request.getRemoteAddr();
-	// }
-	// person.setCreatedByUser(ipAddress);
-	//
-	// }
-	//
-	// @Before("com.epam.jmp.controller.PersonViewController.updatePerson() &&
-	// args(request,..)")
-	//
-	// public void logEntityUpdate(HttpServletRequest request, JoinPoint
-	// joinPoint) {
-	// AbstractEntity person = (AbstractEntity) joinPoint.getArgs()[0];
-	// person.setDateCreated(new Date());
-	// String ipAddress = request.getHeader("X-FORWARDED-FOR");
-	// if (ipAddress == null) {
-	// ipAddress = request.getRemoteAddr();
-	// }
-	// person.setCreatedByUser(ipAddress);
-	// }
+	@Pointcut("execution(* com.epam.jmp.controller.*.create*(..))")
+	public void inControllerCreate() {
+	}
+	
+	@Pointcut("execution(* com.epam.jmp.controller.*.update*(..))")
+	public void inControllerUpdate() {
+	}
+	
+	@Before(value = "inControllerCreate() && args(request,entity,..)")
+	public void populateCreateInfo(HttpServletRequest request, AbstractEntity entity) {
+		entity.setDateCreated(new Date());
+		entity.setLastmodified(entity.getDateCreated());
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");
+		if (ipAddress == null) {
+			ipAddress = request.getRemoteAddr();
+		}
+		entity.setCreatedByUser(ipAddress);
+		entity.setModifiedByUser(ipAddress);
+		
+	}
+	
+	@Before(value = "inControllerUpdate() && args(request,entity,..)")
+	public void populatemodifyInfo(HttpServletRequest request, AbstractEntity entity) {
+		entity.setLastmodified(new Date());
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");
+		if (ipAddress == null) {
+			ipAddress = request.getRemoteAddr();
+		}
+		entity.setModifiedByUser(ipAddress);
+		
+	}
 	
 	@After("inDAOLayer()")
 	public void logDAOCalls(JoinPoint joinPoint) {
@@ -61,7 +71,7 @@ public class JMPAspect {
 	@Around("execution(* com.epam.jmp.dao.*.get*(..))")
 	public Object around(ProceedingJoinPoint pjp) throws Throwable {
 		Object retVal = pjp.proceed();
-		logger.info(retVal.toString());
+		logger.info("Return value:  " + retVal.toString());
 		return retVal;
 	}
 }
