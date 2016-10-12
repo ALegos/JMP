@@ -24,6 +24,7 @@ public class Person extends AbstractEntity {
 	@Email(message = "Email is not valid")
 	private String email;
 	private Level level;
+	private Boolean excluded;
 	private String primarySkill;
 	private Manager manager;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT_PATTERN)
@@ -81,5 +82,13 @@ public class Person extends AbstractEntity {
 	@XmlElement
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+	
+	public Boolean getExcluded() {
+		return excluded;
+	}
+	
+	public void setExcluded(Boolean excluded) {
+		this.excluded = excluded;
 	}
 }

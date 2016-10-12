@@ -4,59 +4,59 @@ import java.util.Date;
 import java.util.UUID;
 
 public abstract class AbstractEntity {
-
+	
 	private String uid;
-	private Date dateCreated;
-	private Date lastmodified;
-	private String createdByUser;
-	private String modifiedByUser;
-
+	private Date creationDate;
+	private Date modificationDate;
+	private String creationInfo;
+	private String modificationInfo;
+	
 	public AbstractEntity() {
 	}
-
+	
 	public String getUid() {
 		return uid;
 	}
-
+	
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-
+	
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
+	public Date getModificationDate() {
+		return modificationDate;
+	}
+	
+	public void setModificationDate(Date modificationDate) {
+		this.modificationDate = modificationDate;
+	}
+	
+	public String getCreationInfo() {
+		return creationInfo;
+	}
+	
+	public void setCreationInfo(String creationInfo) {
+		this.creationInfo = creationInfo;
+	}
+	
+	public String getModificationInfo() {
+		return modificationInfo;
+	}
+	
+	public void setModificationInfo(String modificationInfo) {
+		this.modificationInfo = modificationInfo;
+	}
+	
 	public String generateUid() {
 		this.setUid(UUID.randomUUID().toString());
 		return this.getUid();
 	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public Date getLastmodified() {
-		return lastmodified;
-	}
-
-	public void setLastmodified(Date lastmodified) {
-		this.lastmodified = lastmodified;
-	}
-
-	public String getCreatedByUser() {
-		return createdByUser;
-	}
-
-	public void setCreatedByUser(String createdByUser) {
-		this.createdByUser = createdByUser;
-	}
-
-	public String getModifiedByUser() {
-		return modifiedByUser;
-	}
-
-	public void setModifiedByUser(String modifiedByUser) {
-		this.modifiedByUser = modifiedByUser;
-	}
-
+	
 }

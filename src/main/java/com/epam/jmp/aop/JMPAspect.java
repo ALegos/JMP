@@ -39,25 +39,25 @@ public class JMPAspect {
 	
 	@Before(value = "inControllerCreate() && args(request,entity,..)")
 	public void populateCreateInfo(HttpServletRequest request, AbstractEntity entity) {
-		entity.setDateCreated(new Date());
-		entity.setLastmodified(entity.getDateCreated());
+		entity.setCreationDate(new Date());
+		entity.setModificationDate(entity.getCreationDate());
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");
 		if (ipAddress == null) {
 			ipAddress = request.getRemoteAddr();
 		}
-		entity.setCreatedByUser(ipAddress);
-		entity.setModifiedByUser(ipAddress);
+		entity.setCreationInfo(ipAddress);
+		entity.setModificationInfo(ipAddress);
 		
 	}
 	
 	@Before(value = "inControllerUpdate() && args(request,entity,..)")
 	public void populatemodifyInfo(HttpServletRequest request, AbstractEntity entity) {
-		entity.setLastmodified(new Date());
+		entity.setModificationDate(new Date());
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");
 		if (ipAddress == null) {
 			ipAddress = request.getRemoteAddr();
 		}
-		entity.setModifiedByUser(ipAddress);
+		entity.setModificationInfo(ipAddress);
 		
 	}
 	
