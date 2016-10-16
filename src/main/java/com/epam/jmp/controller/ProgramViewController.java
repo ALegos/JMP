@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +43,7 @@ public class ProgramViewController {
 		return "programs";
 	}
 	
-	@PostConstruct
+	// @PostConstruct
 	private void init() {
 		MentorshipProgram m1 = new MentorshipProgram();
 		m1.setName("Javascript program");

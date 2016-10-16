@@ -16,7 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.epam.jmp.model.AbstractEntity;
+import com.epam.jmp.model.MetaData;
+import com.epam.jmp.model.MetaDataSupportedAbstractEntity;
 
 @Aspect
 // @Configurable
@@ -38,27 +39,30 @@ public class JMPAspect {
 	}
 	
 	@Before(value = "inControllerCreate() && args(request,entity,..)")
-	public void populateCreateInfo(HttpServletRequest request, AbstractEntity entity) {
-		entity.setCreationDate(new Date());
-		entity.setModificationDate(entity.getCreationDate());
+	public void populateCreateInfo(HttpServletRequest request, MetaDataSupportedAbstractEntity entity) {
+		MetaData metadata = entity.getMetaData();
+		metadata.setCreationDate(new Date());
+		metadata.setModificationDate(metadata.getCreationDate());
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");
 		if (ipAddress == null) {
 			ipAddress = request.getRemoteAddr();
 		}
-		entity.setCreationInfo(ipAddress);
-		entity.setModificationInfo(ipAddress);
+		metadata.setCreationInfo(ipAddress);
+		metadata.setModificationInfo(ipAddress);
+		entity.setMetaData(metadata);
 		
 	}
 	
 	@Before(value = "inControllerUpdate() && args(request,entity,..)")
-	public void populatemodifyInfo(HttpServletRequest request, AbstractEntity entity) {
-		entity.setModificationDate(new Date());
+	public void populatemodifyInfo(HttpServletRequest request, MetaDataSupportedAbstractEntity entity) {
+		MetaData metadata = entity.getMetaData();
+		metadata.setModificationDate(new Date());
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");
 		if (ipAddress == null) {
 			ipAddress = request.getRemoteAddr();
 		}
-		entity.setModificationInfo(ipAddress);
-		
+		metadata.setModificationInfo(ipAddress);
+		entity.setMetaData(metadata);
 	}
 	
 	@After("inDAOLayer()")

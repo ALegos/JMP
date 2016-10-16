@@ -1,118 +1,127 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
- 
-  <changeSet id="oh-1" author="oleh.hupalo">
-  	<createTable tableName="person">
-  		<column name="uid" type="UUID">
-  			<constraints primaryKey="true" nullable="false"/>
-  		</column>
-  		<column name="name" type="varchar(30)">
-  			<constraints nullable="false"/>
-  		</column>
-  		<column name="email" type="varchar(50)">
-  			<constraints nullable="false"/>
-  		</column>
-  		<column name="level" type="varchar(10)"/>
-  		<column name="primary_skill" type="varchar(100)"/>
-  		<column name="excluded" type="boolean" defaultValueBoolean="false">
-  			<constraints nullable="false"/>
-  		</column>
-  		<column name="creation_date" type="datetime"/>
-  		<column name="creation_info" type="varchar(30)"/>
-  		<column name="modification_date" type="datetime"/>
-  		<column name="modification_info" type="varchar(30)"/>
-  	</createTable>
-  </changeSet>
- 	<changeSet id="oh-2" author="oleh.hupalo">
- 		<createTable tableName="phase_participant_assignment">
- 			<column name="person_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="program_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="role" type="varchar(20)">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="status" type="varchar(20)">
- 				<constraints nullable="false"/>
- 			</column>
- 		</createTable>
- 	</changeSet>
- 	<changeSet id="oh-3" author="oleh.hupalo">
- 		<createTable tableName="group">
- 			<column name="uid" type="UUID">
- 				<constraints primaryKey="true" nullable="false"/>
- 			</column>
- 			<column name="mentee_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="menteor_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="program_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="planned_start" type="DATETIME"/>
- 			<column name="planned_end" type="DATETIME"/>
- 			<column name="actual_start" type="DATETIME"/>
- 			<column name="actual_end" type="DATETIME"/>
- 			<column name="status" type="varchar(20)">
- 				<constraints nullable="false"/>
- 			</column>
- 		</createTable>
- 	</changeSet>
- 	<changeSet id="oh-4" author="oleh.hupalo">
- 		<createTable tableName="mentorship_program">
- 			<column name="uid" type="UUID">
- 				<constraints primaryKey="true" nullable="false"/>
- 			</column>
- 			<column name="name" type="varchar(50)">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="office_location" type="varchar(50)">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="start_date" type="DATETIME">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="end_date" type="DATETIME">
- 				<constraints nullable="false"/>
- 			</column>
- 		</createTable>
- 	</changeSet>
- 	<changeSet id="oh-5" author="oleh.hupalo">
- 		<createTable tableName="lecture">
- 			<column name="uid" type="UUID">
- 				<constraints primaryKey="true" nullable="false"/>
- 			</column>
- 			<column name="domain_area" type="varchar(100)"/>
- 			<column name="topic" type="varchar(50)">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="lector_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="duration" type="TIME">
- 				<constraints nullable="false"/>
- 			</column>
- 			<column name="status" type="varchar(20)">
- 				<constraints nullable="false"/>
- 			</column>
- 		</createTable>
- 	</changeSet>
- 	<changeSet id="oh-6" author="oleh.hupalo">
- 		<createTable tableName="person_lecture">
-	 		<column name="person_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
-	 		<column name="lecture_uid" type="UUID">
- 				<constraints nullable="false"/>
- 			</column>
- 		</createTable>
- 	</changeSet>
- 
- 
+
+	<changeSet id="oh-1" author="oleh.hupalo">
+		<createTable tableName="person">
+			<column name="uid" type="UUID">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(30)">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="level" type="varchar(10)" />
+			<column name="primary_skill" type="varchar(100)" />
+			<column name="birth_date" type="date" />
+			<column name="excluded" type="boolean" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+			<column name="creation_date" type="datetime" />
+			<column name="creation_info" type="varchar(30)" />
+			<column name="modification_date" type="datetime" />
+			<column name="modification_info" type="varchar(30)" />
+			<column name="manager_uid" type="UUID"/>
+		</createTable>
+	</changeSet>
+	<changeSet id="oh-2" author="oleh.hupalo">
+		<createTable tableName="phase_participant_assignment">
+			<column name="uid" type="UUID">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="person_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="program_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="role" type="varchar(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="status" type="varchar(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="oh-3" author="oleh.hupalo">
+		<createTable tableName="group">
+			<column name="uid" type="UUID">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="mentee_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="mentor_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="program_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="planned_start" type="DATETIME" />
+			<column name="planned_end" type="DATETIME" />
+			<column name="actual_start" type="DATETIME" />
+			<column name="actual_end" type="DATETIME" />
+			<column name="status" type="varchar(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="oh-4" author="oleh.hupalo">
+		<createTable tableName="mentorship_program">
+			<column name="uid" type="UUID">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="office_location" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="start_date" type="DATETIME">
+				<constraints nullable="false" />
+			</column>
+			<column name="end_date" type="DATETIME">
+				<constraints nullable="false" />
+			</column>
+			<column name="creation_date" type="datetime" />
+			<column name="creation_info" type="varchar(30)" />
+			<column name="modification_date" type="datetime" />
+			<column name="modification_info" type="varchar(30)" />
+		</createTable>
+	</changeSet>
+	<changeSet id="oh-5" author="oleh.hupalo">
+		<createTable tableName="lecture">
+			<column name="uid" type="UUID">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="domain_area" type="varchar(100)" />
+			<column name="topic" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="lector_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="duration" type="TIME">
+				<constraints nullable="false" />
+			</column>
+			<column name="status" type="varchar(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="oh-6" author="oleh.hupalo">
+		<createTable tableName="person_lecture">
+			<column name="person_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+			<column name="lecture_uid" type="UUID">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+
 </databaseChangeLog>

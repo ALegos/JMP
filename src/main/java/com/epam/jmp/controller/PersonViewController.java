@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -84,7 +83,7 @@ public class PersonViewController {
 		return "persons";
 	}
 	
-	@PostConstruct
+	// @PostConstruct
 	private void init() {
 		Person p1 = new Person();
 		p1.setName("Oleh.Hupalo");

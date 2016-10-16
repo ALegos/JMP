@@ -1,15 +1,20 @@
 package com.epam.jmp.model;
 
-import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@MappedSuperclass
 public abstract class AbstractEntity {
 	
+	@Id
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String uid;
-	private Date creationDate;
-	private Date modificationDate;
-	private String creationInfo;
-	private String modificationInfo;
 	
 	public AbstractEntity() {
 	}
@@ -20,38 +25,6 @@ public abstract class AbstractEntity {
 	
 	public void setUid(String uid) {
 		this.uid = uid;
-	}
-	
-	public Date getCreationDate() {
-		return creationDate;
-	}
-	
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-	
-	public Date getModificationDate() {
-		return modificationDate;
-	}
-	
-	public void setModificationDate(Date modificationDate) {
-		this.modificationDate = modificationDate;
-	}
-	
-	public String getCreationInfo() {
-		return creationInfo;
-	}
-	
-	public void setCreationInfo(String creationInfo) {
-		this.creationInfo = creationInfo;
-	}
-	
-	public String getModificationInfo() {
-		return modificationInfo;
-	}
-	
-	public void setModificationInfo(String modificationInfo) {
-		this.modificationInfo = modificationInfo;
 	}
 	
 	public String generateUid() {

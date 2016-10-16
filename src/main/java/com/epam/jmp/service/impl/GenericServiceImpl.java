@@ -27,8 +27,8 @@ public abstract class GenericServiceImpl<T extends AbstractEntity, X extends Gen
 	}
 	
 	@Override
-	public T create(T t) {
-		return this.genericDAO.create(t);
+	public void create(T t) {
+		this.genericDAO.create(t);
 	}
 	
 	@Override

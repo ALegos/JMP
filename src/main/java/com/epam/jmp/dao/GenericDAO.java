@@ -1,35 +1,54 @@
 package com.epam.jmp.dao;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.epam.jmp.model.AbstractEntity;
 
+@Repository
+@Transactional
 public abstract class GenericDAO<T extends AbstractEntity> {
 	
-   private final Map<String, T> storage = new HashMap<>();
+	private final Map<String, T> storage = new HashMap<>();
+	@PersistenceContext
+	private EntityManager manager;
 	
-	public  T create (T t){
-		storage.put(t.generateUid(), t);
-		return t;
+	private Class<T> type;
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public GenericDAO() {
+		Type t = getClass().getGenericSuperclass();
+		ParameterizedType pt = (ParameterizedType) t;
+		type = (Class) pt.getActualTypeArguments()[0];
 	}
 	
-	public void delete ( String uid){
-		storage.remove(uid);
+	public void create(T t) {
+		manager.persist(t);
 	}
 	
-	public T update (T t){
-		storage.put(t.getUid(), t);
-		return t;
+	public void delete(String uid) {
+		manager.remove(manager.getReference(type, uid));
 	}
 	
-	public  T getByUid (String uid){
-		return storage.get(uid);
+	public T update(T t) {
+		return manager.merge(t);
 	}
 	
-	public List<T> getAll (){
+	public T getByUid(String uid) {
+		return manager.find(type, uid);
+	}
+	
+	public List<T> getAll() {
 		return new ArrayList<T>(storage.values());
-	}	
+	}
 }
