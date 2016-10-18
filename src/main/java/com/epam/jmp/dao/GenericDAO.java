@@ -2,13 +2,13 @@ package com.epam.jmp.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +49,9 @@ public abstract class GenericDAO<T extends AbstractEntity> {
 	}
 	
 	public List<T> getAll() {
-		return new ArrayList<T>(storage.values());
+		final StringBuffer queryString = new StringBuffer("SELECT e from ");
+		queryString.append(type.getSimpleName()).append(" e ");
+		TypedQuery<T> query = manager.createQuery(queryString.toString(), type);
+		return query.getResultList();
 	}
 }
