@@ -7,16 +7,20 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.epam.jmp.model.enums.ParticipantAssignmentStatus;
 import com.epam.jmp.model.enums.Role;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
-@XmlRootElement
 @Table(name = "phase_participant_assignment")
 public class PhaseParticipantAssignment extends AbstractEntity {
+	
+	private static final long serialVersionUID = 4696377008477642056L;
 	
 	@OneToOne
 	@JoinColumn(name = "person_uid")
@@ -31,39 +35,4 @@ public class PhaseParticipantAssignment extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private ParticipantAssignmentStatus status;
 	
-	public Person getPerson() {
-		return person;
-	}
-	
-	@XmlElement
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-	
-	public Role getRole() {
-		return role;
-	}
-	
-	@XmlElement
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	
-	public ParticipantAssignmentStatus getStatus() {
-		return status;
-	}
-	
-	@XmlElement
-	public void setStatus(ParticipantAssignmentStatus status) {
-		this.status = status;
-	}
-	
-	public MentorshipProgram getMentorshipProgram() {
-		return mentorshipProgram;
-	}
-	
-	@XmlElement
-	public void setMentorshipProgram(MentorshipProgram mentorshipProgram) {
-		this.mentorshipProgram = mentorshipProgram;
-	}
 }

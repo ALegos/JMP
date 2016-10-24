@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-@ControllerAdvice
-class GlobalDefaultExceptionHandler {
+@ControllerAdvice(basePackages = "com.epam.jmp.controller.view")
+class ViewExceptionHandlerController {
   public static final String DEFAULT_ERROR_VIEW = "error";
 
   @ExceptionHandler(value = Exception.class)

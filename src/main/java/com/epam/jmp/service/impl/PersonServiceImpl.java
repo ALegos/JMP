@@ -19,10 +19,10 @@ public class PersonServiceImpl extends GenericServiceImpl<Person, PersonDAO> imp
 	}
 	
 	@Override
-	public boolean isPersonExist(Person person) {
+	public boolean isPersonExist(String email) {
 		boolean result = false;
-		if (StringUtils.isNotBlank(person.getEmail())) {
-			result = findByEmail(person.getEmail()).isPresent();
+		if (StringUtils.isNotBlank(email)) {
+			result = findByEmail(email).isPresent();
 		}
 		return result;
 	}

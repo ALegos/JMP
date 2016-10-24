@@ -1,4 +1,4 @@
-package com.epam.jmp.controller;
+package com.epam.jmp.controller.view;
 
 import static com.epam.jmp.constants.UtilConstants.DATE_FORMAT_PATTERN;
 

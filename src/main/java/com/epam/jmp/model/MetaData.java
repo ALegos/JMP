@@ -4,11 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Embeddable
-@XmlRootElement
 public class MetaData {
 	
 	@Column(name = "creation_date", updatable = false)
@@ -24,7 +21,6 @@ public class MetaData {
 		return creationDate;
 	}
 	
-	@XmlElement
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
@@ -33,7 +29,6 @@ public class MetaData {
 		return modificationDate;
 	}
 	
-	@XmlElement
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
 	}
@@ -42,7 +37,6 @@ public class MetaData {
 		return creationInfo;
 	}
 	
-	@XmlElement
 	public void setCreationInfo(String creationInfo) {
 		this.creationInfo = creationInfo;
 	}
@@ -51,7 +45,6 @@ public class MetaData {
 		return modificationInfo;
 	}
 	
-	@XmlElement
 	public void setModificationInfo(String modificationInfo) {
 		this.modificationInfo = modificationInfo;
 	}

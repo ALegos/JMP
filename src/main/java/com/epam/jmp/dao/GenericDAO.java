@@ -2,9 +2,7 @@ package com.epam.jmp.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +17,6 @@ import com.epam.jmp.model.AbstractEntity;
 @Transactional
 public abstract class GenericDAO<T extends AbstractEntity> {
 	
-	private final Map<String, T> storage = new HashMap<>();
 	@PersistenceContext
 	private EntityManager manager;
 	
@@ -32,8 +29,10 @@ public abstract class GenericDAO<T extends AbstractEntity> {
 		type = (Class) pt.getActualTypeArguments()[0];
 	}
 	
-	public void create(T t) {
+	public String create(T t) {
 		manager.persist(t);
+		manager.flush();
+		return t.getUid();
 	}
 	
 	public void delete(String uid) {

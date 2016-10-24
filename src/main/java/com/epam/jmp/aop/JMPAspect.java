@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.epam.jmp.dto.MetaDataSupportedDTO;
 import com.epam.jmp.model.MetaData;
 import com.epam.jmp.model.MetaDataSupportedAbstractEntity;
 
@@ -30,12 +31,42 @@ public class JMPAspect {
 	public void inDAOLayer() {
 	}
 	
-	@Pointcut("execution(* com.epam.jmp.controller.*.create*(..))")
+	@Pointcut("execution(* com.epam.jmp.controller.view.*.create*(..))")
 	public void inControllerCreate() {
 	}
 	
-	@Pointcut("execution(* com.epam.jmp.controller.*.update*(..))")
+	@Pointcut("execution(* com.epam.jmp.controller.view.*.update*(..))")
 	public void inControllerUpdate() {
+	}
+	
+	@Pointcut("execution(* com.epam.jmp.controller.rest.*.create*(..))")
+	public void inRESTControllerCreate() {
+	}
+	
+	@Pointcut("execution(* com.epam.jmp.controller.rest.*.update*(..))")
+	public void inRESTControllerUpdate() {
+	}
+	
+	@Before(value = "inRESTControllerCreate() && args(request,dto,..)")
+	public void populateRESTCreateInfo(HttpServletRequest request, MetaDataSupportedDTO dto) {
+		dto.setMetaDataCreationDate(new Date());
+		dto.setMetaDataModificationDate(dto.getMetaDataCreationDate());
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");
+		if (ipAddress == null) {
+			ipAddress = request.getRemoteAddr();
+		}
+		dto.setMetaDataCreationInfo(ipAddress);
+		dto.setMetaDataModificationInfo(ipAddress);
+	}
+	
+	@Before(value = "inRESTControllerUpdate() && args(request,dto,..)")
+	public void populateRESTModifyInfo(HttpServletRequest request, MetaDataSupportedDTO dto) {
+		dto.setMetaDataModificationDate(new Date());
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");
+		if (ipAddress == null) {
+			ipAddress = request.getRemoteAddr();
+		}
+		dto.setMetaDataModificationInfo(ipAddress);
 	}
 	
 	@Before(value = "inControllerCreate() && args(request,entity,..)")
@@ -54,7 +85,7 @@ public class JMPAspect {
 	}
 	
 	@Before(value = "inControllerUpdate() && args(request,entity,..)")
-	public void populatemodifyInfo(HttpServletRequest request, MetaDataSupportedAbstractEntity entity) {
+	public void populateModifyInfo(HttpServletRequest request, MetaDataSupportedAbstractEntity entity) {
 		MetaData metadata = entity.getMetaData();
 		metadata.setModificationDate(new Date());
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");

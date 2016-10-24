@@ -1,5 +1,6 @@
 package com.epam.jmp.model;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.GeneratedValue;
@@ -9,7 +10,9 @@ import javax.persistence.MappedSuperclass;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Serializable {
+	
+	private static final long serialVersionUID = 8992547079771437717L;
 	
 	@Id
 	@GeneratedValue(generator = "system-uuid")

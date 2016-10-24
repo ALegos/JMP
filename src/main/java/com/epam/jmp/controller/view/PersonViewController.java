@@ -1,8 +1,7 @@
-package com.epam.jmp.controller;
+package com.epam.jmp.controller.view;
 
 import static com.epam.jmp.constants.UtilConstants.DATE_FORMAT_PATTERN;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -11,13 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.epam.jmp.model.Person;
 import com.epam.jmp.model.enums.Level;
 import com.epam.jmp.service.PersonService;
-import com.epam.jmp.validators.PersonValidator;
 
 @Controller
 public class PersonViewController {
-	
-	@Autowired
-	public PersonValidator personValidator;
 	
 	@Autowired
 	public PersonService personService;
@@ -113,14 +105,6 @@ public class PersonViewController {
 		personService.create(p1);
 		personService.create(p2);
 		personService.create(p3);
-	}
-	
-	@InitBinder
-	public void dataBinding(WebDataBinder binder) {
-		binder.addValidators(this.personValidator);
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN);
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, "birthDate", new CustomDateEditor(dateFormat, true));
 	}
 	
 }

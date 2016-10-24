@@ -1,4 +1,4 @@
-package com.epam.jmp.controller;
+package com.epam.jmp.controller.rest;
 
 import static com.epam.jmp.constants.ControllerConstants.PROGRAM_API_MAPPING;
 

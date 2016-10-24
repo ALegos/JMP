@@ -10,7 +10,7 @@ public interface GenericService<T extends AbstractEntity> {
 	
 	List<T> getAll();
 	
-	void create(T t);
+	String create(T t);
 	
 	T update(T t);
 	

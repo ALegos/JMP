@@ -23,7 +23,9 @@
 		<jcl.slf4j.version>1.7.21</jcl.slf4j.version>
 		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
 		<hibernate.version>5.2.2.Final</hibernate.version>
-		
+		<lombok.version>1.16.10</lombok.version>
+		<liquibase.version>3.4.1</liquibase.version>
+		<mysql-connector.version>5.1.30</mysql-connector.version>
 	</properties>
 
 	<dependencies>
@@ -49,7 +51,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.30</version>
+			<version>${mysql-connector.version}</version>
 		</dependency>
 
 		<dependency>
@@ -57,25 +59,25 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
-    <!-- For connection pooling -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-c3p0</artifactId>
-      <version>${hibernate.version}</version>
-    </dependency>
-		
+
+		<!-- For connection pooling -->
 		<dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-core</artifactId>
-    	<version>${hibernate.version}</version>
-    </dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
 
 		<!-- liquibase -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>3.4.1</version>
+			<version>${liquibase.version}</version>
 		</dependency>
 
 
@@ -175,6 +177,20 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.common.version}</version>
 		</dependency>
+
+		<!-- code genrate -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>0.7.5</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
