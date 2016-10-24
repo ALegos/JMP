@@ -1,5 +1,6 @@
 package com.epam.jmp.controller.rest;
 
+import static com.epam.jmp.constants.ControllerConstants.PERSONS_API;
 import static com.epam.jmp.constants.ControllerConstants.PERSON_API_MAPPING;
 
 import java.util.List;
@@ -57,7 +58,6 @@ public class PersonController {
 			dtos.setElements(persons.stream().map(p -> mapper.map(p, PersonDTO.class)).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(dtos, HttpStatus.OK);
-		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, params = "email")
@@ -87,19 +87,19 @@ public class PersonController {
 		}
 		String uid = personService.create(mapper.map(dto, Person.class));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/person/{id}").buildAndExpand(uid).toUri());
+		headers.setLocation(ucBuilder.path(PERSONS_API + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.PUT)
-	public ResponseEntity<Person> updatePerson(HttpServletRequest request, @PathVariable("uid") String uid,
+	public ResponseEntity<PersonDTO> updatePerson(HttpServletRequest request, @PathVariable("uid") String uid,
 			@RequestBody @Valid PersonDTO dto) {
 		
 		Person currentPerson = personService.getByUid(uid);
 		
 		if (currentPerson == null) {
 			logger.debug("Person with uid " + uid + " not found");
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<PersonDTO>(HttpStatus.NOT_FOUND);
 		}
 		currentPerson.setName(dto.getName());
 		currentPerson.setLevel(dto.getLevel());
@@ -108,8 +108,8 @@ public class PersonController {
 		currentPerson.setBirthDate(dto.getBirthDate());
 		// TODO all fields should be updated
 		
-		personService.update(currentPerson);
-		return new ResponseEntity<Person>(currentPerson, HttpStatus.OK);
+		currentPerson = personService.update(currentPerson);
+		return new ResponseEntity<PersonDTO>(mapper.map(currentPerson, PersonDTO.class), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
@@ -126,7 +126,6 @@ public class PersonController {
 	
 	@InitBinder
 	public void dataBinding(WebDataBinder binder) {
-		// TODO add custom date time format for lecture start & end
 		binder.addValidators(this.personValidator);
 	}
 	

@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 	
-	// @Autowired
-	// private PersonDTOValidator personValidator;
-	
 	@RequestMapping(value = { "/", "persons" }, method = RequestMethod.GET)
 	public String getPersonsList() {
 		return "redirect:/person/list";
@@ -28,7 +25,6 @@ public class IndexController {
 	@InitBinder
 	public void dataBinding(WebDataBinder binder) {
 		// TODO add custom date time format for lecture start & end
-		// binder.addValidators(this.personValidator);
 		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN);
 		dateFormat.setLenient(false);
 		SimpleDateFormat durationFormat = new SimpleDateFormat(DURATION_FORMAT_PATTERN);
