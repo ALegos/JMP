@@ -32,6 +32,7 @@ public class RESTExceptionHandlerController {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public GeneralErrorDTO defaultRESTErrorProcess(Exception ex) {
+		ex.printStackTrace();
 		return new GeneralErrorDTO(ex);
 	}
 	

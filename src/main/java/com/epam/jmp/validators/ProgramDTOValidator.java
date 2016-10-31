@@ -1,10 +1,12 @@
 package com.epam.jmp.validators;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.epam.jmp.dto.MentorshipProgramDTO;
 
+@Component
 public class ProgramDTOValidator implements Validator {
 	
 	@Override

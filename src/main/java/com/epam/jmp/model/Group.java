@@ -2,6 +2,7 @@ package com.epam.jmp.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,10 +25,10 @@ public class Group extends AbstractEntity {
 	
 	private static final long serialVersionUID = -1960682384208218745L;
 	
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.DETACH, CascadeType.PERSIST })
 	@JoinColumn(name = "mentor_uid")
 	private Person mentor;
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.DETACH, CascadeType.PERSIST })
 	@JoinColumn(name = "mentee_uid")
 	private Person mentee;
 	@Column(name = "planned_start")

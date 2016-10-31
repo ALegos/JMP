@@ -3,6 +3,7 @@ package com.epam.jmp.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -41,11 +42,11 @@ public class Person extends MetaDataSupportedAbstractEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manager_uid")
 	private Person manager;
-	@OneToMany(mappedBy = "manager")
+	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
 	private List<Person> subordinates;
 	@Column(name = "birth_date", nullable = false)
 	private Date birthDate;
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
 	private PhaseParticipantAssignment assignment;
 	
 }

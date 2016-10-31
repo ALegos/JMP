@@ -3,6 +3,7 @@ package com.epam.jmp.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -27,7 +28,8 @@ public class MentorshipProgram extends MetaDataSupportedAbstractEntity {
 	private Date startDate;
 	@Column(nullable = false, name = "end_date")
 	private Date endDate;
-	@OneToMany(mappedBy = "mentorshipProgram")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "mentorshipProgram")
 	private List<Group> groups;
-	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "mentorshipProgram")
+	private List<PhaseParticipantAssignment> assignees;
 }
