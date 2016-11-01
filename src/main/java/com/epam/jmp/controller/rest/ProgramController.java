@@ -1,6 +1,5 @@
 package com.epam.jmp.controller.rest;
 
-import static com.epam.jmp.constants.ControllerConstants.PROGRAMS_API;
 import static com.epam.jmp.constants.ControllerConstants.PROGRAM_API_MAPPING;
 
 import java.util.List;
@@ -77,7 +76,7 @@ public class ProgramController {
 			UriComponentsBuilder ucBuilder) {
 		String uid = programService.create(mapper.map(dto, MentorshipProgram.class));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path(PROGRAMS_API + "/{id}").buildAndExpand(uid).toUri());
+		headers.setLocation(ucBuilder.path(PROGRAM_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	

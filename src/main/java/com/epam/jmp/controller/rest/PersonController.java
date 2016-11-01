@@ -1,6 +1,5 @@
 package com.epam.jmp.controller.rest;
 
-import static com.epam.jmp.constants.ControllerConstants.PERSONS_API;
 import static com.epam.jmp.constants.ControllerConstants.PERSON_API_MAPPING;
 
 import java.util.List;
@@ -87,7 +86,7 @@ public class PersonController {
 		}
 		String uid = personService.create(mapper.map(dto, Person.class));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path(PERSONS_API + "/{id}").buildAndExpand(uid).toUri());
+		headers.setLocation(ucBuilder.path(PERSON_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
@@ -124,9 +123,9 @@ public class PersonController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<GenericCollectonDTO<PersonDTO>> findMentorsWithMoreThanSpecifiedMentees(Boolean status,
-			Integer number) {
+	@RequestMapping(method = RequestMethod.GET, params = { "menteesStatus", "menteesCount" })
+	public ResponseEntity<GenericCollectonDTO<PersonDTO>> findMentorsWithMoreThanSpecifiedMentees(
+			@RequestParam("menteesStatus") Boolean status, @RequestParam("menteesCount") Integer number) {
 		GenericCollectonDTO<PersonDTO> dtos = new GenericCollectonDTO<PersonDTO>();
 		List<Person> persons = personService.findMentorsWithMoreThanSpecifiedMentees(status, number);
 		if (persons.isEmpty()) {

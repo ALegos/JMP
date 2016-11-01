@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "phase_participant_assignment")
+@Table(name = "phase_participant_assignments")
 public class PhaseParticipantAssignment extends AbstractEntity {
 	
 	private static final long serialVersionUID = 4696377008477642056L;

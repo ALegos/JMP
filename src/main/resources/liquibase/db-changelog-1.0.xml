@@ -4,7 +4,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 	<changeSet id="oh-1" author="oleh.hupalo">
-		<createTable tableName="person">
+		<createTable tableName="persons">
 			<column name="uid" type="UUID">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -28,7 +28,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet id="oh-2" author="oleh.hupalo">
-		<createTable tableName="phase_participant_assignment">
+		<createTable tableName="phase_participant_assignments">
 			<column name="uid" type="UUID">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -47,7 +47,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet id="oh-3" author="oleh.hupalo">
-		<createTable tableName="group">
+		<createTable tableName="groups">
 			<column name="uid" type="UUID">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -70,7 +70,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet id="oh-4" author="oleh.hupalo">
-		<createTable tableName="mentorship_program">
+		<createTable tableName="mentorship_programs">
 			<column name="uid" type="UUID">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -93,7 +93,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet id="oh-5" author="oleh.hupalo">
-		<createTable tableName="lecture">
+		<createTable tableName="lectures">
 			<column name="uid" type="UUID">
 				<constraints primaryKey="true" nullable="false" />
 			</column>

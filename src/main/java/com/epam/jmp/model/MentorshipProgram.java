@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "mentorship_program")
+@Table(name = "mentorship_programs")
 public class MentorshipProgram extends MetaDataSupportedAbstractEntity {
 	
 	private static final long serialVersionUID = -4522396180724209788L;

@@ -1,6 +1,5 @@
 package com.epam.jmp.controller.rest;
 
-import static com.epam.jmp.constants.ControllerConstants.ASSIGNMENTS_API;
 import static com.epam.jmp.constants.ControllerConstants.ASSIGNMENT_API_MAPPING;
 
 import java.util.List;
@@ -75,7 +74,7 @@ public class AssignmentController {
 			@RequestBody @Valid PhaseParticipantAssignmentDTO dto, UriComponentsBuilder ucBuilder) {
 		String uid = assignmentService.create(mapper.map(dto, PhaseParticipantAssignment.class));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path(ASSIGNMENTS_API + "/{id}").buildAndExpand(uid).toUri());
+		headers.setLocation(ucBuilder.path(ASSIGNMENT_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	

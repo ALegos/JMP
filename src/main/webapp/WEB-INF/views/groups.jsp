@@ -34,7 +34,7 @@
 						<li><a href="lectures">Lectures</a></li>
 					</ul>
 					<div class="nav navbar-nav">
-						<a href="person/create" class="btn btn-primary navbar-btn">Create
+						<a href="group/create" class="btn btn-primary navbar-btn">Create
 							Group</a>
 					</div>
 					<div class="navbar-right margin-right-reset">

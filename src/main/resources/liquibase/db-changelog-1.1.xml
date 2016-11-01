@@ -5,39 +5,39 @@
 
 	<changeSet id="oh-7" author="oleh.hupalo">
 		<addForeignKeyConstraint baseColumnNames="manager_uid"
-			baseTableName="person" constraintName="fk_manager_uid"
-			referencedColumnNames="uid" referencedTableName="person" />
+			baseTableName="persons" constraintName="fk_manager_uid"
+			referencedColumnNames="uid" referencedTableName="persons" />
 	</changeSet>
 	<changeSet id="oh-8" author="oleh.hupalo">
 		<addForeignKeyConstraint constraintName="fk_assignment_person"
-			referencedTableName="person" baseColumnNames="person_uid"
-			baseTableName="phase_participant_assignment" referencedColumnNames="uid" />
+			referencedTableName="persons" baseColumnNames="person_uid"
+			baseTableName="phase_participant_assignments" referencedColumnNames="uid" />
 		<addForeignKeyConstraint constraintName="fk_assignment_program"
-			referencedTableName="mentorship_program" baseColumnNames="program_uid"
-			baseTableName="phase_participant_assignment" referencedColumnNames="uid" />
+			referencedTableName="mentorship_programs" baseColumnNames="program_uid"
+			baseTableName="phase_participant_assignments" referencedColumnNames="uid" />
 	</changeSet>
 	<changeSet id="oh-9" author="oleh.hupalo">
 		<addForeignKeyConstraint constraintName="fk_group_mentor"
-			referencedTableName="person" baseColumnNames="mentor_uid"
-			baseTableName="group" referencedColumnNames="uid" />
+			referencedTableName="persons" baseColumnNames="mentor_uid"
+			baseTableName="groups" referencedColumnNames="uid" />
 		<addForeignKeyConstraint constraintName="fk_group_mentee"
-			referencedTableName="person" baseColumnNames="mentee_uid"
-			baseTableName="group" referencedColumnNames="uid" />
+			referencedTableName="persons" baseColumnNames="mentee_uid"
+			baseTableName="groups" referencedColumnNames="uid" />
 		<addForeignKeyConstraint constraintName="fk_group_program"
-			referencedTableName="mentorship_program" baseColumnNames="program_uid"
-			baseTableName="group" referencedColumnNames="uid" />
+			referencedTableName="mentorship_programs" baseColumnNames="program_uid"
+			baseTableName="groups" referencedColumnNames="uid" />
 	</changeSet>
 	<changeSet id="oh-10" author="oleh.hupalo">
 		<addForeignKeyConstraint constraintName="fk_lecture_person"
-			referencedTableName="person" baseColumnNames="person_uid"
+			referencedTableName="persons" baseColumnNames="person_uid"
 			baseTableName="person_lecture" referencedColumnNames="uid" />
 		<addForeignKeyConstraint constraintName="fk_person_lecture"
-			referencedTableName="lecture" baseColumnNames="lecture_uid"
+			referencedTableName="lectures" baseColumnNames="lecture_uid"
 			baseTableName="person_lecture" referencedColumnNames="uid" />
 
 	</changeSet>
 	<changeSet id="oh-11" author="oleh.hupalo">
-		<addColumn tableName="lecture">
+		<addColumn tableName="lectures">
 			<column name="planned_start" type="DATETIME" />
 			<column name="planned_end" type="DATETIME" />
 			<column name="actual_start" type="DATETIME" />

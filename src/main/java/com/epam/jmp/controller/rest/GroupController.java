@@ -1,6 +1,5 @@
 package com.epam.jmp.controller.rest;
 
-import static com.epam.jmp.constants.ControllerConstants.GROUPS_API;
 import static com.epam.jmp.constants.ControllerConstants.GROUP_API_MAPPING;
 
 import java.util.List;
@@ -72,7 +71,7 @@ public class GroupController {
 			UriComponentsBuilder ucBuilder) {
 		String uid = groupService.create(mapper.map(dto, Group.class));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path(GROUPS_API + "/{id}").buildAndExpand(uid).toUri());
+		headers.setLocation(ucBuilder.path(GROUP_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	

@@ -6,15 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Persons</title>
+<title>Lectures</title>
 
-<link rel="stylesheet" type="text/css" href="resources/css/person.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/css/general.css">
 
 <script src="resources/js/jquery-3.1.1.min.js"></script>
-<script src="resources/js/person.js"></script>
+<script src="resources/js/lecture.js"></script>
 <script src="resources/js/bootstrap.js"></script>
 
 </head>
@@ -29,15 +28,15 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="persons">Persons<span
-								class="sr-only">(current)</span></a></li>
+						<li><a href="persons">Persons</a></li>
 						<li><a href="programs">Programs</a></li>
 						<li><a href="groups">Groups</a></li>
-						<li><a href="lectures">Lectures</a></li>
+						<li class="active"><a href="lectures">Lectures<span
+								class="sr-only">(current)</span></a></li>
 					</ul>
 					<div class="nav navbar-nav">
-						<a href="person/create" class="btn btn-primary navbar-btn">Create
-							Person</a>
+						<a href="lecture/create" class="btn btn-primary navbar-btn">Create
+							Lecture</a>
 					</div>
 					<div class="navbar-right margin-right-reset">
 						<button type="button" class="btn btn-default navbar-btn ">Sign
@@ -46,37 +45,36 @@
 				</div>
 			</div>
 			</nav>
-			<h1 class="page-name-header">All Persons</h1>
+			<h1 class="page-name-header">All Lectures</h1>
 
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Level</th>
-						<th>Excluded</th>
+						<th>Domain Area</th>
+						<th>Topic</th>
+						<th>Lecturer</th>
+						<th>Duration</th>
 						<th>Birth date</th>
-						<th>Primary skill</th>
-						<th>Created</th>
-						<th>Updated</th>
+						<th>Planned Start</th>
+						<th>Planned End</th>
+						<th>Status</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 
-				<c:forEach var="person" items="${persons.elements}">
+				<c:forEach var="lecture" items="${lectures.elements}">
 					<tr>
-						<td>${person.name}</td>
-						<td>${person.email}</td>
-						<td>${person.level}</td>
-						<td>${person.excluded}</td>
-						<td><fmt:formatDate pattern="${dateFormatPattern}"
-								value="${person.birthDate}" /></td>
-						<td>${person.primarySkill}</td>
+						<td>${lecture.domainArea}</td>
+						<td>${lecture.topic}</td>
+						<td>${lecture.lectorUid}</td>
+						<td><fmt:formatDate pattern="${durationFormatPattern}"
+								value="${lecture.duration}" /></td>
 						<td><fmt:formatDate pattern="${dateTimeFormatPattern}"
-								value="${person.metaDataCreationDate}" /></td>
+								value="${lecture.plannedStart}" /></td>
 						<td><fmt:formatDate pattern="${dateTimeFormatPattern}"
-								value="${person.metaDataModificationDate}" /></td>
-						<td><a href="person/${person.uid}" class="btn btn-info">Update</a>
+								value="${lecture.plannedEnd}" /></td>
+						<td>${lecture.status}</td>
+						<td><a href="lecture/${lecture.uid}" class="btn btn-info">Update</a>
 							<button class="btn btn-danger"
 								onclick="deletePerson(this,'${person.uid}');">Delete</button></td>
 					</tr>

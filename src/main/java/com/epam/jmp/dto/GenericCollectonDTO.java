@@ -1,5 +1,6 @@
 package com.epam.jmp.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,6 +18,7 @@ public class GenericCollectonDTO<T> {
 	}
 	
 	public GenericCollectonDTO() {
+		this.elements = new ArrayList<>();
 	}
 	
 }

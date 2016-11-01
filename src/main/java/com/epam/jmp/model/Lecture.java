@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "lecture")
+@Table(name = "lectures")
 public class Lecture extends AbstractEntity {
 	
 	private static final long serialVersionUID = 7804610138239802948L;

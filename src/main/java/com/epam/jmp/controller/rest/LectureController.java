@@ -1,6 +1,5 @@
 package com.epam.jmp.controller.rest;
 
-import static com.epam.jmp.constants.ControllerConstants.LECTURES_API;
 import static com.epam.jmp.constants.ControllerConstants.LECTURE_API_MAPPING;
 
 import java.util.List;
@@ -72,7 +71,7 @@ public class LectureController {
 			UriComponentsBuilder ucBuilder) {
 		String uid = lectureService.create(mapper.map(dto, Lecture.class));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path(LECTURES_API + "/{id}").buildAndExpand(uid).toUri());
+		headers.setLocation(ucBuilder.path(LECTURE_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	

@@ -23,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "person")
+@Table(name = "persons")
 public class Person extends MetaDataSupportedAbstractEntity {
 	
 	private static final long serialVersionUID = -7404290229061459773L;
