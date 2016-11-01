@@ -124,6 +124,19 @@ public class PersonController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<GenericCollectonDTO<PersonDTO>> findMentorsWithMoreThanSpecifiedMentees(Boolean status,
+			Integer number) {
+		GenericCollectonDTO<PersonDTO> dtos = new GenericCollectonDTO<PersonDTO>();
+		List<Person> persons = personService.findMentorsWithMoreThanSpecifiedMentees(status, number);
+		if (persons.isEmpty()) {
+			return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(HttpStatus.NO_CONTENT);
+		} else {
+			dtos.setElements(persons.stream().map(p -> mapper.map(p, PersonDTO.class)).collect(Collectors.toList()));
+		}
+		return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(dtos, HttpStatus.OK);
+	}
+	
 	@InitBinder
 	public void dataBinding(WebDataBinder binder) {
 		binder.addValidators(this.personValidator);

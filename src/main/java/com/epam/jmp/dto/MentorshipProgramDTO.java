@@ -5,6 +5,7 @@ import static com.epam.jmp.constants.UtilConstants.DATE_FORMAT_PATTERN;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -30,10 +31,10 @@ public class MentorshipProgramDTO extends MetaDataSupportedDTO {
 	@NotEmpty(message = "Please enter ofiice Location")
 	@Size(min = 2, message = "City name should be more than 2 characters")
 	private String officeLocation;
-	@NotEmpty(message = "Start date couldn't be empty")
+	@NotNull(message = "Start date couldn't be empty")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT_PATTERN)
 	private Date startDate;
-	@NotEmpty(message = "End date couldn't be empty")
+	@NotNull(message = "End date couldn't be empty")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT_PATTERN)
 	private Date endDate;
 	@XmlTransient

@@ -26,31 +26,47 @@ public abstract class GenericDAO<T extends AbstractEntity> {
 	public GenericDAO() {
 		Type t = getClass().getGenericSuperclass();
 		ParameterizedType pt = (ParameterizedType) t;
-		type = (Class) pt.getActualTypeArguments()[0];
+		setType((Class) pt.getActualTypeArguments()[0]);
 	}
 	
 	public String create(T t) {
-		manager.persist(t);
-		manager.flush();
+		getManager().persist(t);
+		getManager().flush();
 		return t.getUid();
 	}
 	
 	public void delete(String uid) {
-		manager.remove(manager.getReference(type, uid));
+		getManager().remove(getManager().getReference(getType(), uid));
 	}
 	
 	public T update(T t) {
-		return manager.merge(t);
+		return getManager().merge(t);
 	}
 	
 	public T getByUid(String uid) {
-		return manager.find(type, uid);
+		return getManager().find(getType(), uid);
 	}
 	
 	public List<T> getAll() {
 		final StringBuffer queryString = new StringBuffer("SELECT e from ");
-		queryString.append(type.getSimpleName()).append(" e ");
-		TypedQuery<T> query = manager.createQuery(queryString.toString(), type);
+		queryString.append(getType().getSimpleName()).append(" e ");
+		TypedQuery<T> query = getManager().createQuery(queryString.toString(), getType());
 		return query.getResultList();
+	}
+
+	public EntityManager getManager() {
+		return manager;
+	}
+
+	public void setManager(EntityManager manager) {
+		this.manager = manager;
+	}
+
+	public Class<T> getType() {
+		return type;
+	}
+
+	public void setType(Class<T> type) {
+		this.type = type;
 	}
 }

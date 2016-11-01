@@ -3,9 +3,9 @@
  */
 
 
-function deletePerson(el, uid){
+function deleteLecture(el, uid){
 	var xhr = new XMLHttpRequest();
-	xhr.open("DELETE", "api/persons/"+uid, false);
+	xhr.open("DELETE", "api/lectures/"+uid, false);
 	xhr.send();
 	
     if (xhr.status == 204) {

@@ -32,6 +32,8 @@
 						<li class="active"><a href="persons">Persons<span
 								class="sr-only">(current)</span></a></li>
 						<li><a href="programs">Programs</a></li>
+						<li><a href="groups">Groups</a></li>
+						<li><a href="lectures">Lectures</a></li>
 					</ul>
 					<div class="nav navbar-nav">
 						<a href="person/create" class="btn btn-primary navbar-btn">Create
@@ -49,25 +51,31 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>#ID</th>
 						<th>Name</th>
 						<th>Email</th>
 						<th>Level</th>
-						<th>Primary skill</th>
+						<th>Excluded</th>
 						<th>Birth date</th>
+						<th>Primary skill</th>
+						<th>Created</th>
+						<th>Updated</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 
-				<c:forEach var="person" items="${persons}">
+				<c:forEach var="person" items="${persons.elements}">
 					<tr>
-						<td>${person.uid}</td>
 						<td>${person.name}</td>
 						<td>${person.email}</td>
 						<td>${person.level}</td>
-						<td>${person.primarySkill}</td>
+						<td>${person.excluded}</td>
 						<td><fmt:formatDate pattern="${dateFormatPattern}"
 								value="${person.birthDate}" /></td>
+						<td>${person.primarySkill}</td>
+						<td><fmt:formatDate pattern="${dateTimeFormatPattern}"
+								value="${person.metaDataCreationDate}" /></td>
+						<td><fmt:formatDate pattern="${dateTimeFormatPattern}"
+								value="${person.metaDataModificationDate}" /></td>
 						<td><a href="person/${person.uid}" class="btn btn-info">Update</a>
 							<button class="btn btn-danger"
 								onclick="deletePerson(this,'${person.uid}');">Delete</button></td>

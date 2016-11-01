@@ -46,7 +46,7 @@
 			</nav>
 			<h1 class="page-name-header">Create Person</h1>
 
-			<form:form method="POST" action="create" modelAttribute="person"
+			<form:form method="POST" action="create" modelAttribute="personDTO"
 				class="form-horizontal">
 				<div class="form-group">
 					<form:label path="name" class="col-sm-2 control-label">Name</form:label>

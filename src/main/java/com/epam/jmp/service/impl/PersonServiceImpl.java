@@ -1,5 +1,6 @@
 package com.epam.jmp.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,11 @@ public class PersonServiceImpl extends GenericServiceImpl<Person, PersonDAO> imp
 	@Override
 	public Optional<Person> findByEmail(String email) {
 		return genericDAO.findByEmail(email);
+	}
+	
+	@Override
+	public List<Person> findMentorsWithMoreThanSpecifiedMentees(Boolean status, Integer number) {
+		return genericDAO.findMentorsWithMoreThanSpecifiedMentees(status, number);
 	}
 	
 }

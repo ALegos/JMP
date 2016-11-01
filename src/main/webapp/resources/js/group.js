@@ -3,9 +3,9 @@
  */
 
 
-function deletePerson(el, uid){
+function deleteGroup(el, uid){
 	var xhr = new XMLHttpRequest();
-	xhr.open("DELETE", "api/persons/"+uid, false);
+	xhr.open("DELETE", "api/groups/"+uid, false);
 	xhr.send();
 	
     if (xhr.status == 204) {
