@@ -4,3 +4,4 @@
 .classpath
 META-INF
 /bin
+/src/main/resources/properties/db.properties
