@@ -44,6 +44,46 @@
 			<column name="actual_end" type="DATETIME" />
 		</addColumn>
 	</changeSet>
+	<changeSet id="oh-12" author="oleh.hupalo">
+		<modifyDataType columnName="duration" newDataType="varchar(15)"
+			tableName="lectures" />
+	</changeSet>
+	<changeSet id="oh-13" author="oleh.hupalo">
+		<addColumn tableName="persons">
+			<column name="is_manager" type="boolean" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+	<changeSet id="oh-14" author="oleh.hupalo">
+		<dropForeignKeyConstraint baseTableName="phase_participant_assignments"
+			constraintName="fk_assignment_person" />
+		<addForeignKeyConstraint constraintName="fk_assignment_person"
+			referencedTableName="persons" baseColumnNames="person_uid"
+			baseTableName="phase_participant_assignments" referencedColumnNames="uid"
+			onDelete="CASCADE" onUpdate="CASCADE" />
+	</changeSet>
+	<changeSet id="oh-15" author="oleh.hupalo">
+		<dropForeignKeyConstraint baseTableName="phase_participant_assignments"
+			constraintName="fk_assignment_program" />
+		<addForeignKeyConstraint constraintName="fk_assignment_program"
+			referencedTableName="mentorship_programs" baseColumnNames="program_uid"
+			baseTableName="phase_participant_assignments" referencedColumnNames="uid"
+			onDelete="CASCADE" onUpdate="CASCADE" />
+	</changeSet>
+	<changeSet id="oh-16" author="oleh.hupalo">
+		<dropForeignKeyConstraint baseTableName="groups"
+			constraintName="fk_group_program" />
+		<addForeignKeyConstraint constraintName="fk_group_program"
+			referencedTableName="mentorship_programs" baseColumnNames="program_uid"
+			baseTableName="groups" referencedColumnNames="uid" onDelete="CASCADE" />
+	</changeSet>
+	<changeSet id="oh-17" author="oleh.hupalo">
+		<modifyDataType columnName="duration" newDataType="BIGINT"
+			tableName="lectures" />
+	</changeSet>
+
+
 
 
 </databaseChangeLog>

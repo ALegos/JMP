@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="cust" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,30 +24,14 @@
 	<div class="row">
 		<div
 			class="col-md-8 .col-sm-6 .col-xs-12 col-md-offset-2 .col-xs-offset-3 .col-sm-offset-2">
-			<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#"> JMP Portal </a>
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="../persons">Persons</a></li>
-						<li class="active"><a href="../programs">Programs<span
-								class="sr-only">(current)</span></a></li>
-						<li><a href="groups">Groups</a></li>
-						<li><a href="lectures">Lectures</a></li>
-					</ul>
-					<div class="navbar-right margin-right-reset">
-						<button type="button" class="btn btn-default navbar-btn ">Sign
-							in</button>
-					</div>
-				</div>
-			</div>
-			</nav>
+
+			<cust:header active="program" prefix="../"
+				buttonName="Create Program" />
+
 			<h1 class="page-name-header">Create Mentorship Program</h1>
 
-			<form:form method="POST" action="create" modelAttribute="mentorshipProgramDTO"
-				class="form-horizontal">
+			<form:form method="POST" action="create"
+				modelAttribute="mentorshipProgramDTO" class="form-horizontal">
 				<div class="form-group">
 					<form:label path="name" class="col-sm-2 control-label">Name</form:label>
 					<div class="col-sm-5">

@@ -41,4 +41,13 @@ public abstract class GenericServiceImpl<T extends AbstractEntity, X extends Gen
 		this.genericDAO.delete(uid);
 	}
 	
+	@Override
+	public boolean isValidUid(String uid) {
+		boolean result = false;
+		if (this.genericDAO.getByUid(uid) != null) {
+			result = true;
+		}
+		return result;
+	}
+	
 }

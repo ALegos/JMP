@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="cust" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,26 +24,10 @@
 	<div class="row">
 		<div
 			class="col-md-8 .col-sm-6 .col-xs-12 col-md-offset-2 .col-xs-offset-3 .col-sm-offset-2">
-			<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#"> JMP Portal </a>
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="persons">Persons</a></li>
-						<li><a href="programs">Programs</a></li>
-						<li><a href="groups">Groups</a></li>
-						<li class="active"><a href="lectures">Lectures<span
-								class="sr-only">(current)</span></a></li>
-					</ul>
-					<div class="navbar-right margin-right-reset">
-						<button type="button" class="btn btn-default navbar-btn ">Sign
-							in</button>
-					</div>
-				</div>
-			</div>
-			</nav>
+
+			<cust:header active="lecture" prefix="../"
+				buttonName="Create Lecture" />
+
 			<h1 class="page-name-header">Update Lecture</h1>
 
 			<form:form method="POST" action="${lectureDTO.uid}"
@@ -69,8 +54,10 @@
 				<div class="form-group">
 					<form:label path="lectorUid" class="col-sm-2 control-label">Lecturer</form:label>
 					<div class="col-sm-5">
-						<form:input path="lectorUid" class="form-control"
-							placeholder="Lecturer" />
+						<form:select path="lectorUid" class="form-control">
+							<form:options items="${lecturers}" itemLabel="name"
+								itemValue="uid" />
+						</form:select>
 					</div>
 					<div class="col-sm-5">
 						<form:errors path="lectorUid" class="bg-danger" />
@@ -109,11 +96,24 @@
 				<div class="form-group">
 					<form:label path="status" class="col-sm-2 control-label">Status</form:label>
 					<div class="col-sm-5">
-						<form:input path="status" class="form-control"
-							placeholder="Status" />
+						<form:select path="status" class="form-control"
+							items="${statuses}" />
 					</div>
 					<div class="col-sm-5">
 						<form:errors path="status" class="bg-danger" />
+					</div>
+				</div>
+				<div class="form-group">
+					<form:label path="attendeesUids" class="col-sm-2 control-label">Lecturer</form:label>
+					<div class="col-sm-5">
+						<form:select multiple="true" path="attendeesUids"
+							class="form-control">
+							<form:options items="${attendees}" itemLabel="name"
+								itemValue="uid" />
+						</form:select>
+					</div>
+					<div class="col-sm-5">
+						<form:errors path="attendeesUids" class="bg-danger" />
 					</div>
 				</div>
 				<div class="form-group">

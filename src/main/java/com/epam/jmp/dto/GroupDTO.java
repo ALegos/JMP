@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.epam.jmp.model.MentorshipProgram;
 import com.epam.jmp.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -37,6 +36,6 @@ public class GroupDTO {
 	private Date actualEnd;
 	@NotNull(message = "Please specify status")
 	private Status status;
-	private MentorshipProgram mentorshipProgram;
+	private String mentorshipProgramUid;
 	
 }

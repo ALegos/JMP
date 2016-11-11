@@ -38,4 +38,14 @@ public class PersonServiceImpl extends GenericServiceImpl<Person, PersonDAO> imp
 		return genericDAO.findMentorsWithMoreThanSpecifiedMentees(status, number);
 	}
 	
+	@Override
+	public List<Person> findByIsManagerFlag(Boolean isManager) {
+		return genericDAO.findByIsManagerFlag(isManager);
+	}
+	
+	@Override
+	public Person getByUidWithManagerAndAssignment(String uid) {
+		return genericDAO.getByUidWithManagerAndAssignment(uid);
+	}
+	
 }

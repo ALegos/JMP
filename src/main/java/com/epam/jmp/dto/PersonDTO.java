@@ -13,6 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.epam.jmp.model.enums.Level;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @XmlRootElement
+@JsonInclude(Include.NON_NULL)
 public class PersonDTO extends MetaDataSupportedDTO {
 	
 	private String uid;
@@ -31,12 +34,13 @@ public class PersonDTO extends MetaDataSupportedDTO {
 	private String email;
 	private Level level;
 	private Boolean excluded = false;
+	private Boolean isManager = false;
 	private String primarySkill;
-	private PersonDTO managerDTO = null;
-	private GenericCollectonDTO<PersonDTO> subordinateDTOs = null;
+	private PersonDTO managerDTO;
+	private GenericCollectonDTO<PersonDTO> subordinateDTOs;
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT_PATTERN)
 	private Date birthDate;
-	private PhaseParticipantAssignmentDTO assignmentDTO = null;
+	private PhaseParticipantAssignmentDTO assignmentDTO;
 	
 }

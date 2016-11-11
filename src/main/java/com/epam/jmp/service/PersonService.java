@@ -12,4 +12,8 @@ public interface PersonService extends GenericService<Person> {
 	Optional<Person> findByEmail(String email);
 	
 	public List<Person> findMentorsWithMoreThanSpecifiedMentees(Boolean status, Integer number);
+	
+	public List<Person> findByIsManagerFlag(Boolean isManager);
+	
+	public Person getByUidWithManagerAndAssignment(String uid);
 }

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.epam.jmp.dto.GenericCollectonDTO;
 import com.epam.jmp.dto.PersonDTO;
+import com.epam.jmp.dto.converters.PersonDTOConverter;
 import com.epam.jmp.model.Person;
 import com.epam.jmp.service.PersonService;
 import com.epam.jmp.validators.PersonDTOValidator;
@@ -38,14 +38,19 @@ public class PersonController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 	
-	@Autowired
 	private PersonService personService;
 	
-	@Autowired
 	private PersonDTOValidator personValidator;
 	
+	private PersonDTOConverter converter;
+	
 	@Autowired
-	private ModelMapper mapper;
+	public PersonController(PersonService personService, PersonDTOConverter converter,
+			PersonDTOValidator personValidator) {
+		this.converter = converter;
+		this.personService = personService;
+		this.personValidator = personValidator;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<GenericCollectonDTO<PersonDTO>> listAllPerson() {
@@ -54,7 +59,7 @@ public class PersonController {
 		if (persons.isEmpty()) {
 			return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(HttpStatus.NO_CONTENT);
 		} else {
-			dtos.setElements(persons.stream().map(p -> mapper.map(p, PersonDTO.class)).collect(Collectors.toList()));
+			dtos.setElements(persons.stream().map(converter::toDTO).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(dtos, HttpStatus.OK);
 	}
@@ -65,7 +70,7 @@ public class PersonController {
 		if (!person.isPresent()) {
 			return new ResponseEntity<PersonDTO>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<PersonDTO>(mapper.map(person.get(), PersonDTO.class), HttpStatus.OK);
+		return new ResponseEntity<PersonDTO>(converter.toDTO(person.get()), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.GET)
@@ -74,7 +79,16 @@ public class PersonController {
 		if (person == null) {
 			return new ResponseEntity<PersonDTO>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<PersonDTO>(mapper.map(person, PersonDTO.class), HttpStatus.OK);
+		return new ResponseEntity<PersonDTO>(converter.toDTO(person), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{uid}", method = RequestMethod.GET, params = { "managerPopulated" })
+	public ResponseEntity<PersonDTO> getUserWithManager(@PathVariable("uid") String uid) {
+		Person person = personService.getByUidWithManagerAndAssignment(uid);
+		if (person == null) {
+			return new ResponseEntity<PersonDTO>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<PersonDTO>(converter.toDTO(person), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -84,7 +98,7 @@ public class PersonController {
 			logger.debug("A Person with email " + dto.getEmail() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
-		String uid = personService.create(mapper.map(dto, Person.class));
+		String uid = personService.create(converter.toEntity(dto));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path(PERSON_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -108,7 +122,7 @@ public class PersonController {
 		// TODO all fields should be updated
 		
 		currentPerson = personService.update(currentPerson);
-		return new ResponseEntity<PersonDTO>(mapper.map(currentPerson, PersonDTO.class), HttpStatus.OK);
+		return new ResponseEntity<PersonDTO>(converter.toDTO(currentPerson), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
@@ -131,7 +145,7 @@ public class PersonController {
 		if (persons.isEmpty()) {
 			return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(HttpStatus.NO_CONTENT);
 		} else {
-			dtos.setElements(persons.stream().map(p -> mapper.map(p, PersonDTO.class)).collect(Collectors.toList()));
+			dtos.setElements(persons.stream().map(converter::toDTO).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<PersonDTO>>(dtos, HttpStatus.OK);
 	}

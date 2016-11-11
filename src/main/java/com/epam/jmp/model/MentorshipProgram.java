@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,6 +18,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@NamedEntityGraphs({ @NamedEntityGraph(name = "populatedProgram", attributeNodes = {
+		@NamedAttributeNode(value = "groups"), @NamedAttributeNode(value = "assignees") }) })
 @Table(name = "mentorship_programs")
 public class MentorshipProgram extends MetaDataSupportedAbstractEntity {
 	

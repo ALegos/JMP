@@ -3,11 +3,6 @@ package com.epam.jmp.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.collection.internal.AbstractPersistentCollection;
-import org.hibernate.collection.spi.PersistentCollection;
-import org.modelmapper.Condition;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -100,17 +95,6 @@ public class JMPConfiguration extends WebMvcConfigurerAdapter {
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
-	}
-	
-	@Bean
-	public ModelMapper modelMapper() {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setPropertyCondition(new Condition<Object, Object>() {
-			public boolean applies(MappingContext<Object, Object> context) {
-				return !(context.getSource() instanceof AbstractPersistentCollection);
-			}
-		});
-		return mapper;
 	}
 	
 }

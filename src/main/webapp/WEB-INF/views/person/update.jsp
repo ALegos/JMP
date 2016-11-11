@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="cust" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,28 +27,13 @@
 	<div class="row">
 		<div
 			class="col-md-8 .col-sm-6 .col-xs-12 col-md-offset-2 .col-xs-offset-3 .col-sm-offset-2">
-			<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#"> JMP Portal </a>
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="../persons">Persons<span
-								class="sr-only">(current)</span></a></li>
-						<li><a href="../programs">Programs</a></li>
-					</ul>
-					<div class="navbar-right margin-right-reset">
-						<button type="button" class="btn btn-default navbar-btn ">Sign
-							in</button>
-					</div>
-				</div>
-			</div>
-			</nav>
+
+			<cust:header active="person" prefix="../" buttonName="Create Person" />
+
 			<h1 class="page-name-header">Update Person</h1>
 
-			<form:form method="POST" action="${personDTO.uid}" modelAttribute="personDTO"
-				class="form-horizontal">
+			<form:form method="POST" action="${personDTO.uid}"
+				modelAttribute="personDTO" class="form-horizontal">
 				<div class="form-group">
 					<form:label path="name" class="col-sm-2 control-label">Name</form:label>
 					<div class="col-sm-5">
@@ -96,9 +82,91 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<form:label path="isManager" class="col-sm-2 control-label">Is Manager</form:label>
+					<div class="col-sm-5">
+						<form:checkbox path="isManager" />
+					</div>
+					<div class="col-sm-5">
+						<form:errors path="isManager" class="bg-danger" />
+					</div>
+				</div>
+				<div class="form-group">
+					<form:label path="excluded" class="col-sm-2 control-label">Excluded</form:label>
+					<div class="col-sm-5">
+						<form:checkbox path="excluded" />
+					</div>
+					<div class="col-sm-5">
+						<form:errors path="excluded" class="bg-danger" />
+					</div>
+				</div>
+				<div class="form-group">
+					<form:label path="managerDTO.uid" class="col-sm-2 control-label">Manager</form:label>
+					<div class="col-sm-5">
+						<form:select path="managerDTO.uid" class="form-control">
+							<form:option value="" label="---Please Select---" />
+							<form:options items="${managers}" itemLabel="name"
+								itemValue="uid" />
+						</form:select>
+					</div>
+					<div class="col-	sm-5">
+						<form:errors path="managerDTO.uid" class="bg-danger" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-5">
+						<button class="btn grey" type="button" data-toggle="collapse"
+							data-target="#collapseExample" aria-expanded="false"
+							aria-controls="collapseExample">Mentorship Program
+							Assignment</button>
+					</div>
+				</div>
+
+				<div class="collapse" id="collapseExample">
+					<form:hidden path="assignmentDTO.uid" />
+					<div class="form-group">
+						<form:label path="assignmentDTO.mentorshipProgramUid"
+							class="col-sm-2 control-label">Mentorship Program</form:label>
+						<div class="col-sm-5">
+							<form:select path="assignmentDTO.mentorshipProgramUid"
+								class="form-control">
+								<form:option value="" label="---Please Select---" />
+								<form:options items="${programs}" itemLabel="name"
+									itemValue="uid" />
+							</form:select>
+						</div>
+						<div class="col-	sm-5">
+							<form:errors path="assignmentDTO.mentorshipProgramUid"
+								class="bg-danger" />
+						</div>
+					</div>
+					<div class="form-group">
+						<form:label path="assignmentDTO.role"
+							class="col-sm-2 control-label">Role</form:label>
+						<div class="col-sm-5">
+							<form:select path="assignmentDTO.role" class="form-control"
+								items="${roles}" />
+						</div>
+						<div class="col-sm-5">
+							<form:errors path="assignmentDTO.role" class="bg-danger" />
+						</div>
+					</div>
+					<div class="form-group">
+						<form:label path="assignmentDTO.status"
+							class="col-sm-2 control-label">Status</form:label>
+						<div class="col-sm-5">
+							<form:select path="assignmentDTO.status" class="form-control"
+								items="${statuses}" />
+						</div>
+						<div class="col-sm-5">
+							<form:errors path="assignmentDTO.status" class="bg-danger" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-5">
 						<div class="navbar-right margin-right-reset">
-							<button type="submit" class="btn btn-primary text-rigth">Update Person</button>
+							<button type="submit" class="btn btn-primary text-rigth">Update
+								Person</button>
 						</div>
 					</div>
 				</div>

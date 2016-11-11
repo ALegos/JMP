@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -28,17 +27,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.epam.jmp.dto.GenericCollectonDTO;
 import com.epam.jmp.dto.MentorshipProgramDTO;
+import com.epam.jmp.dto.converters.ProgramDTOConverter;
 import com.epam.jmp.model.MentorshipProgram;
 import com.epam.jmp.service.MentorshipProgramService;
 
 @Controller
 public class ProgramViewController {
 	
-	@Autowired
-	public MentorshipProgramService programService;
+	private MentorshipProgramService programService;
+	private ProgramDTOConverter converter;
+	// private ConversionServiceFactoryBean conventionService;
 	
 	@Autowired
-	private ModelMapper mapper;
+	public ProgramViewController(MentorshipProgramService programService, ProgramDTOConverter converter) {
+		this.converter = converter;
+		this.programService = programService;
+		// this.conventionService = conventionService;
+	}
 	
 	@RequestMapping(value = "/program/create", method = RequestMethod.GET)
 	public String createPerson(Model model) {
@@ -52,7 +57,7 @@ public class ProgramViewController {
 		if (bindingResult.hasErrors()) {
 			return "program/create";
 		} else {
-			this.programService.create(mapper.map(mentorshipProgramDTO, MentorshipProgram.class));
+			this.programService.create(converter.toEntity(mentorshipProgramDTO));
 			return "redirect:/programs";
 		}
 	}
@@ -61,7 +66,7 @@ public class ProgramViewController {
 	public String updatePerson(@PathVariable("uid") String uid, Model model) {
 		MentorshipProgram program = programService.getByUid(uid);
 		if (program != null) {
-			model.addAttribute("mentorshipProgramDTO", mapper.map(program, MentorshipProgramDTO.class));
+			model.addAttribute("mentorshipProgramDTO", converter.toDTO(program));
 			return "program/update";
 		} else {
 			return "redirect:/programs";
@@ -76,7 +81,7 @@ public class ProgramViewController {
 			modelMap.addAttribute("programDTO", mentorshipProgramDTO);
 			return "program/update";
 		} else {
-			this.programService.update(mapper.map(mentorshipProgramDTO, MentorshipProgram.class));
+			this.programService.update(converter.toEntity(mentorshipProgramDTO));
 			return "redirect:/programs";
 		}
 	}
@@ -86,8 +91,7 @@ public class ProgramViewController {
 		model.addAttribute("dateFormatPattern", DATE_FORMAT_PATTERN);
 		model.addAttribute("dateTimeFormatPattern", DATETIME_FORMAT_PATTERN);
 		GenericCollectonDTO<MentorshipProgramDTO> dtos = new GenericCollectonDTO<MentorshipProgramDTO>(
-				this.programService.getAll().stream().map(p -> mapper.map(p, MentorshipProgramDTO.class))
-						.collect(Collectors.toList()));
+				this.programService.getAll().stream().map(p -> converter.toDTO(p)).collect(Collectors.toList()));
 		model.addAttribute("programs", dtos);
 		return "programs";
 	}

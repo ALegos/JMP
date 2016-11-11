@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.epam.jmp.model.converter.DurationToMillisAttributeConverter;
 import com.epam.jmp.model.enums.Status;
 
 import lombok.Getter;
@@ -35,6 +37,7 @@ public class Lecture extends AbstractEntity {
 	@JoinColumn(name = "lector_uid")
 	private Person lector;
 	@Column(nullable = false)
+	@Convert(converter = DurationToMillisAttributeConverter.class)
 	private Duration duration;
 	@Column(name = "planned_start")
 	private Date plannedStart;

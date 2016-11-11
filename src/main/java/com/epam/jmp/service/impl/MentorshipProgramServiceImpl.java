@@ -1,5 +1,6 @@
 package com.epam.jmp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,16 @@ public class MentorshipProgramServiceImpl extends GenericServiceImpl<MentorshipP
 	@Override
 	public List<MentorshipProgram> findByOfficeLocation(String office) {
 		return genericDAO.findByOfficeLocation(office);
+	}
+	
+	@Override
+	public List<MentorshipProgram> findByStartDate(Date date) {
+		return genericDAO.findByStartDate(date);
+	}
+	
+	@Override
+	public MentorshipProgram getFullByUid(String uid) {
+		return genericDAO.getFullByUid(uid);
 	}
 	
 }

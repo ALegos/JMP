@@ -11,10 +11,15 @@ import com.epam.jmp.service.PhaseParticipantAssignmentService;
 public class PhaseParticipantAssignmentImpl
 		extends GenericServiceImpl<PhaseParticipantAssignment, PhaseParticipantAssignmentDAO>
 		implements PhaseParticipantAssignmentService {
-
+	
 	@Autowired
 	public PhaseParticipantAssignmentImpl(PhaseParticipantAssignmentDAO genericDAO) {
 		super(genericDAO);
 	}
-
+	
+	@Override
+	public PhaseParticipantAssignment getByPersonUid(String uid) {
+		return genericDAO.getByPersonUid(uid);
+	}
+	
 }

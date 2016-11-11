@@ -5,7 +5,6 @@ import static com.epam.jmp.constants.ControllerConstants.PROGRAM_API_MAPPING;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.epam.jmp.dto.GenericCollectonDTO;
 import com.epam.jmp.dto.MentorshipProgramDTO;
+import com.epam.jmp.dto.converters.ProgramDTOConverter;
 import com.epam.jmp.model.MentorshipProgram;
 import com.epam.jmp.service.MentorshipProgramService;
 import com.epam.jmp.validators.ProgramDTOValidator;
@@ -34,14 +34,15 @@ public class ProgramController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProgramController.class);
 	
-	@Autowired
 	public MentorshipProgramService programService;
-	
-	@Autowired
 	private ProgramDTOValidator programValidator;
+	private ProgramDTOConverter converter;
 	
 	@Autowired
-	private ModelMapper mapper;
+	public ProgramController(MentorshipProgramService programService, ProgramDTOConverter converter) {
+		this.converter = converter;
+		this.programService = programService;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<GenericCollectonDTO<MentorshipProgramDTO>> listAllMentorshipProgram() {
@@ -50,8 +51,7 @@ public class ProgramController {
 		if (programs.isEmpty()) {
 			return new ResponseEntity<GenericCollectonDTO<MentorshipProgramDTO>>(HttpStatus.NO_CONTENT);
 		} else {
-			dtos.setElements(
-					programs.stream().map(p -> mapper.map(p, MentorshipProgramDTO.class)).collect(Collectors.toList()));
+			dtos.setElements(programs.stream().map(p -> converter.toDTO(p)).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<MentorshipProgramDTO>>(dtos, HttpStatus.OK);
 	}
@@ -65,8 +65,7 @@ public class ProgramController {
 			logger.debug("MentorshipProgram in location " + office + " not found");
 			return new ResponseEntity<GenericCollectonDTO<MentorshipProgramDTO>>(HttpStatus.NOT_FOUND);
 		} else {
-			dtos.setElements(
-					programs.stream().map(p -> mapper.map(p, MentorshipProgramDTO.class)).collect(Collectors.toList()));
+			dtos.setElements(programs.stream().map(p -> converter.toDTO(p)).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<MentorshipProgramDTO>>(dtos, HttpStatus.OK);
 	}
@@ -74,7 +73,7 @@ public class ProgramController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> createMentorshipProgram(@RequestBody MentorshipProgramDTO dto,
 			UriComponentsBuilder ucBuilder) {
-		String uid = programService.create(mapper.map(dto, MentorshipProgram.class));
+		String uid = programService.create(converter.toEntity(dto));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path(PROGRAM_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -97,8 +96,7 @@ public class ProgramController {
 		currentMentorshipProgram.setOfficeLocation(program.getOfficeLocation());
 		
 		currentMentorshipProgram = programService.update(currentMentorshipProgram);
-		return new ResponseEntity<MentorshipProgramDTO>(
-				mapper.map(currentMentorshipProgram, MentorshipProgramDTO.class), HttpStatus.OK);
+		return new ResponseEntity<MentorshipProgramDTO>(converter.toDTO(currentMentorshipProgram), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)

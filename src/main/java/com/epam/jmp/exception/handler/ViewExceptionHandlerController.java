@@ -10,18 +10,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice(basePackages = "com.epam.jmp.controller.view")
 class ViewExceptionHandlerController {
-  public static final String DEFAULT_ERROR_VIEW = "error";
-
-  @ExceptionHandler(value = Exception.class)
-  public ModelAndView  defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-    if (AnnotationUtils.findAnnotation
-                (e.getClass(), ResponseStatus.class) != null)
-      throw e;
-    // Otherwise setup and send the user to a default error-view.
-    ModelAndView mav = new ModelAndView();
-    mav.addObject("exception", e);
-    mav.addObject("url", req.getRequestURL());
-    mav.setViewName(DEFAULT_ERROR_VIEW);
-    return mav;
-  }
+	public static final String DEFAULT_ERROR_VIEW = "error";
+	
+	@ExceptionHandler(value = Exception.class)
+	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+		if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null)
+			throw e;
+		// TODO only for debugging
+		e.printStackTrace();
+		// Otherwise setup and send the user to a default error-view.
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("exception", e);
+		mav.addObject("url", req.getRequestURL());
+		mav.setViewName(DEFAULT_ERROR_VIEW);
+		return mav;
+	}
 }

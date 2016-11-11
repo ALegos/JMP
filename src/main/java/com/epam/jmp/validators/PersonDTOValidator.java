@@ -1,5 +1,6 @@
 package com.epam.jmp.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -25,6 +26,10 @@ public class PersonDTOValidator implements Validator {
 		PersonDTO person = (PersonDTO) target;
 		if (personService.isPersonExist(person.getEmail())) {
 			errors.rejectValue("email", "", "Email already exist");
+		}
+		if (person.getManagerDTO() != null && StringUtils.isNotBlank(person.getManagerDTO().getUid())
+				&& !personService.isValidUid(person.getManagerDTO().getUid())) {
+			errors.rejectValue("managerDTO", "", "Please enter valid Manager UID");
 		}
 	}
 }

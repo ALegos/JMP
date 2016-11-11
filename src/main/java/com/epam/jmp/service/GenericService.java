@@ -15,4 +15,6 @@ public interface GenericService<T extends AbstractEntity> {
 	T update(T t);
 	
 	void delete(String uid);
+	
+	boolean isValidUid(String uid);
 }

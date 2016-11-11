@@ -11,6 +11,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,6 +26,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@NamedEntityGraphs({ @NamedEntityGraph(name = "personWithManagerAndAssignment", attributeNodes = {
+		@NamedAttributeNode(value = "manager"), @NamedAttributeNode(value = "assignment") }) })
 @Table(name = "persons")
 public class Person extends MetaDataSupportedAbstractEntity {
 	
@@ -37,6 +42,8 @@ public class Person extends MetaDataSupportedAbstractEntity {
 	private Level level;
 	@Column(nullable = false)
 	private Boolean excluded = false;
+	@Column(name = "is_manager", nullable = false)
+	private Boolean isManager = false;
 	@Column(name = "primary_skill")
 	private String primarySkill;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -46,7 +53,7 @@ public class Person extends MetaDataSupportedAbstractEntity {
 	private List<Person> subordinates;
 	@Column(name = "birth_date", nullable = false)
 	private Date birthDate;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "person")
 	private PhaseParticipantAssignment assignment;
 	
 }

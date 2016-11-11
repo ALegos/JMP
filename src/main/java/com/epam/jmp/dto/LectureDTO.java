@@ -5,6 +5,7 @@ import static com.epam.jmp.constants.UtilConstants.DURATION_FORMAT_PATTERN;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,4 +41,5 @@ public class LectureDTO {
 	private Date actualEnd;
 	@NotNull(message = "Please specify status")
 	private Status status;
+	private List<String> attendeesUids;
 }
