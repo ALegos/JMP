@@ -13,36 +13,33 @@ import com.epam.jmp.service.PersonService;
 @Component
 public class GroupDTOConverter extends DTOConverter<GroupDTO, Group> {
 	
-	private ModelMapper mapper;
 	private PersonService personService;
 	private MentorshipProgramService programService;
 	
 	@Autowired
 	public GroupDTOConverter(ModelMapper mapper, PersonService personService, MentorshipProgramService programService) {
-		this.mapper = mapper;
+		super(mapper);
 		this.personService = personService;
 		this.programService = programService;
 	}
 	
 	@Override
-	public Group toEntity(GroupDTO dto) {
-		Group result = this.mapper.map(dto, Group.class);
+	protected Group populateEntity(GroupDTO dto, Group entity) {
 		if (StringUtils.isNotBlank(dto.getMenteeUid())) {
-			result.setMentee(personService.getByUid(dto.getMenteeUid()));
+			entity.setMentee(personService.getByUid(dto.getMenteeUid()));
 		}
 		if (StringUtils.isNotBlank(dto.getMentorUid())) {
-			result.setMentor(personService.getByUid(dto.getMentorUid()));
+			entity.setMentor(personService.getByUid(dto.getMentorUid()));
 		}
 		if (StringUtils.isNotBlank(dto.getMentorshipProgramUid())) {
-			result.setMentorshipProgram(programService.getByUid(dto.getMentorshipProgramUid()));
+			entity.setMentorshipProgram(programService.getByUid(dto.getMentorshipProgramUid()));
 		}
-		return result;
+		return entity;
 	}
 	
 	@Override
-	public GroupDTO toDTO(Group entity) {
-		GroupDTO result = this.mapper.map(entity, GroupDTO.class);
-		return result;
+	protected GroupDTO populateDTO(Group entity, GroupDTO dto) {
+		return dto;
 	}
 	
 }

@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.epam.jmp.dto.GenericCollectonDTO;
 import com.epam.jmp.dto.GroupDTO;
+import com.epam.jmp.dto.converters.GroupDTOConverter;
 import com.epam.jmp.model.Group;
 import com.epam.jmp.service.GroupService;
+import com.epam.jmp.service.MentorshipProgramService;
+import com.epam.jmp.service.PersonService;
 import com.epam.jmp.validators.GroupDTOValidator;
 
 @Controller
@@ -36,14 +38,21 @@ public class GroupController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-	@Autowired
-	private GroupService groupService;
-	
-	@Autowired
 	private GroupDTOValidator groupValidator;
+	private GroupService groupService;
+	private PersonService personService;
+	private MentorshipProgramService programService;
+	private GroupDTOConverter converter;
 	
 	@Autowired
-	private ModelMapper mapper;
+	public GroupController(GroupService groupService, GroupDTOConverter converter, PersonService personService,
+			MentorshipProgramService programService, GroupDTOValidator groupValidator) {
+		this.groupService = groupService;
+		this.converter = converter;
+		this.personService = personService;
+		this.programService = programService;
+		this.groupValidator = groupValidator;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<GenericCollectonDTO<GroupDTO>> listAllGroups() {
@@ -52,7 +61,7 @@ public class GroupController {
 		if (groups.isEmpty()) {
 			return new ResponseEntity<GenericCollectonDTO<GroupDTO>>(HttpStatus.NO_CONTENT);
 		} else {
-			dtos.setElements(groups.stream().map(g -> mapper.map(g, GroupDTO.class)).collect(Collectors.toList()));
+			dtos.setElements(groups.stream().map(converter::toDTO).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<GroupDTO>>(dtos, HttpStatus.OK);
 	}
@@ -63,13 +72,13 @@ public class GroupController {
 		if (group == null) {
 			return new ResponseEntity<GroupDTO>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<GroupDTO>(mapper.map(group, GroupDTO.class), HttpStatus.OK);
+		return new ResponseEntity<GroupDTO>(converter.toDTO(group), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> createGroup(HttpServletRequest request, @RequestBody @Valid GroupDTO dto,
 			UriComponentsBuilder ucBuilder) {
-		String uid = groupService.create(mapper.map(dto, Group.class));
+		String uid = groupService.create(converter.toEntity(dto));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path(GROUP_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -84,9 +93,9 @@ public class GroupController {
 			logger.debug("Group with uid " + uid + " not found");
 			return new ResponseEntity<GroupDTO>(HttpStatus.NOT_FOUND);
 		}
-		mapper.map(dto, currentGroup);
+		converter.mergeToEntity(dto, currentGroup);
 		currentGroup = groupService.update(currentGroup);
-		return new ResponseEntity<GroupDTO>(mapper.map(currentGroup, GroupDTO.class), HttpStatus.OK);
+		return new ResponseEntity<GroupDTO>(converter.toDTO(currentGroup), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)

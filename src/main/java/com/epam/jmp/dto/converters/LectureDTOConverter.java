@@ -17,23 +17,29 @@ import com.epam.jmp.service.PersonService;
 @Component
 public class LectureDTOConverter extends DTOConverter<LectureDTO, Lecture> {
 	
-	private ModelMapper mapper;
 	private PersonService personService;
 	private MentorshipProgramService programService;
 	
 	@Autowired
 	public LectureDTOConverter(ModelMapper mapper, PersonService personService,
 			MentorshipProgramService programService) {
-		this.mapper = mapper;
+		super(mapper);
 		this.personService = personService;
 		this.programService = programService;
 	}
 	
 	@Override
-	public Lecture toEntity(LectureDTO dto) {
-		Lecture result = this.mapper.map(dto, Lecture.class);
+	public LectureDTO populateDTO(Lecture entity, LectureDTO dto) {
+		if (isLoaded(entity.getAttendees())) {
+			dto.setAttendeesUids(entity.getAttendees().stream().map(Person::getUid).collect(Collectors.toList()));
+		}
+		return dto;
+	}
+	
+	@Override
+	protected Lecture populateEntity(LectureDTO dto, Lecture entity) {
 		if (StringUtils.isNotBlank(dto.getLectorUid())) {
-			result.setLector(personService.getByUid(dto.getLectorUid()));
+			entity.setLector(personService.getByUid(dto.getLectorUid()));
 		}
 		if (dto.getAttendeesUids() != null && !dto.getAttendeesUids().isEmpty()) {
 			// @formatter:off
@@ -44,18 +50,9 @@ public class LectureDTOConverter extends DTOConverter<LectureDTO, Lecture> {
 											.filter(l -> l != null)
 											.collect(Collectors.toList());
 			// @formatter:on
-			result.setAttendees(attendees);
+			entity.setAttendees(attendees);
 		}
-		return result;
-	}
-	
-	@Override
-	public LectureDTO toDTO(Lecture entity) {
-		LectureDTO result = this.mapper.map(entity, LectureDTO.class);
-		if (isLoaded(entity.getAttendees())) {
-			result.setAttendeesUids(entity.getAttendees().stream().map(Person::getUid).collect(Collectors.toList()));
-		}
-		return result;
+		return entity;
 	}
 	
 }

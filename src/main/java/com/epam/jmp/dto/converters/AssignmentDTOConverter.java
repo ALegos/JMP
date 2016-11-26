@@ -14,7 +14,6 @@ import com.epam.jmp.service.PhaseParticipantAssignmentService;
 @Component
 public class AssignmentDTOConverter extends DTOConverter<PhaseParticipantAssignmentDTO, PhaseParticipantAssignment> {
 	
-	private ModelMapper mapper;
 	private PersonService personService;
 	private MentorshipProgramService programService;
 	private PhaseParticipantAssignmentService assignmentService;
@@ -22,7 +21,7 @@ public class AssignmentDTOConverter extends DTOConverter<PhaseParticipantAssignm
 	@Autowired
 	public AssignmentDTOConverter(ModelMapper mapper, PersonService personService,
 			PhaseParticipantAssignmentService assignmentService, MentorshipProgramService programService) {
-		this.mapper = mapper;
+		super(mapper);
 		this.personService = personService;
 		this.assignmentService = assignmentService;
 		this.programService = programService;
@@ -51,9 +50,15 @@ public class AssignmentDTOConverter extends DTOConverter<PhaseParticipantAssignm
 	}
 	
 	@Override
-	public PhaseParticipantAssignmentDTO toDTO(PhaseParticipantAssignment entity) {
-		PhaseParticipantAssignmentDTO result = this.mapper.map(entity, PhaseParticipantAssignmentDTO.class);
-		return result;
+	protected PhaseParticipantAssignment populateEntity(PhaseParticipantAssignmentDTO dto,
+			PhaseParticipantAssignment entity) {
+		return entity;
+	}
+	
+	@Override
+	protected PhaseParticipantAssignmentDTO populateDTO(PhaseParticipantAssignment entity,
+			PhaseParticipantAssignmentDTO dto) {
+		return dto;
 	}
 	
 }

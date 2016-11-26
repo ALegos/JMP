@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.epam.jmp.dto.GenericCollectonDTO;
 import com.epam.jmp.dto.LectureDTO;
+import com.epam.jmp.dto.converters.LectureDTOConverter;
 import com.epam.jmp.model.Lecture;
 import com.epam.jmp.service.LectureService;
+import com.epam.jmp.service.PersonService;
 import com.epam.jmp.validators.LectureDTOValidator;
 
 @Controller
@@ -36,14 +37,19 @@ public class LectureController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LectureController.class);
 	
-	@Autowired
-	private LectureService lectureService;
-	
-	@Autowired
+	public LectureService lectureService;
+	private PersonService personService;
+	private LectureDTOConverter converter;
 	private LectureDTOValidator lectureValidator;
 	
 	@Autowired
-	private ModelMapper mapper;
+	public LectureController(LectureService lectureService, LectureDTOConverter converter, PersonService personService,
+			LectureDTOValidator lectureDTOValidator) {
+		this.lectureService = lectureService;
+		this.converter = converter;
+		this.personService = personService;
+		this.lectureValidator = lectureDTOValidator;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<GenericCollectonDTO<LectureDTO>> listAllLectures() {
@@ -52,7 +58,7 @@ public class LectureController {
 		if (lectures.isEmpty()) {
 			return new ResponseEntity<GenericCollectonDTO<LectureDTO>>(HttpStatus.NO_CONTENT);
 		} else {
-			dtos.setElements(lectures.stream().map(l -> mapper.map(l, LectureDTO.class)).collect(Collectors.toList()));
+			dtos.setElements(lectures.stream().map(converter::toDTO).collect(Collectors.toList()));
 		}
 		return new ResponseEntity<GenericCollectonDTO<LectureDTO>>(dtos, HttpStatus.OK);
 	}
@@ -63,13 +69,13 @@ public class LectureController {
 		if (lecture == null) {
 			return new ResponseEntity<LectureDTO>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<LectureDTO>(mapper.map(lecture, LectureDTO.class), HttpStatus.OK);
+		return new ResponseEntity<LectureDTO>(converter.toDTO(lecture), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> createLecture(HttpServletRequest request, @RequestBody @Valid LectureDTO dto,
 			UriComponentsBuilder ucBuilder) {
-		String uid = lectureService.create(mapper.map(dto, Lecture.class));
+		String uid = lectureService.create(converter.toEntity(dto));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path(LECTURE_API_MAPPING + "/{id}").buildAndExpand(uid).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -84,9 +90,9 @@ public class LectureController {
 			logger.debug("Lecture with uid " + uid + " not found");
 			return new ResponseEntity<LectureDTO>(HttpStatus.NOT_FOUND);
 		}
-		mapper.map(dto, currentLecture);
+		converter.mergeToEntity(dto, currentLecture);
 		currentLecture = lectureService.update(currentLecture);
-		return new ResponseEntity<LectureDTO>(mapper.map(currentLecture, LectureDTO.class), HttpStatus.OK);
+		return new ResponseEntity<LectureDTO>(converter.toDTO(currentLecture), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
