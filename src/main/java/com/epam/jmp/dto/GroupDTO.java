@@ -23,6 +23,8 @@ public class GroupDTO {
 	@NotEmpty(message = "Should contain mentor UUID")
 	@Size(min = 32, max = 32, message = "Acceptable length is 32 characters")
 	private String mentorUid;
+	private String mentorName;
+	private String menteeName;
 	@NotEmpty(message = "Should contain mentee UUID")
 	@Size(min = 32, max = 32, message = "Acceptable length is 32 characters")
 	private String menteeUid;

@@ -15,27 +15,24 @@ import com.epam.jmp.model.MentorshipProgram;
 @Component
 public class ProgramDTOConverter extends DTOConverter<MentorshipProgramDTO, MentorshipProgram> {
 	
-	private ModelMapper mapper;
 	private GroupDTOConverter groupConverter;
 	private AssignmentDTOConverter assignmentConverter;
 	
 	@Autowired
 	public ProgramDTOConverter(ModelMapper mapper, GroupDTOConverter groupConverter,
 			AssignmentDTOConverter assignmentConverter) {
-		this.mapper = mapper;
+		super(mapper);
 		this.groupConverter = groupConverter;
 		this.assignmentConverter = assignmentConverter;
 	}
 	
 	@Override
-	public MentorshipProgram toEntity(MentorshipProgramDTO dto) {
-		MentorshipProgram result = this.mapper.map(dto, MentorshipProgram.class);
-		return result;
+	protected MentorshipProgram populateEntity(MentorshipProgramDTO dto, MentorshipProgram entity) {
+		return entity;
 	}
 	
 	@Override
-	public MentorshipProgramDTO toDTO(MentorshipProgram entity) {
-		MentorshipProgramDTO result = this.mapper.map(entity, MentorshipProgramDTO.class);
+	protected MentorshipProgramDTO populateDTO(MentorshipProgram entity, MentorshipProgramDTO dto) {
 		if (isLoaded(entity.getGroups())) {
 			GenericCollectonDTO<GroupDTO> groupDTOs = new GenericCollectonDTO<GroupDTO>();
 			if (!entity.getGroups().isEmpty()) {
@@ -43,7 +40,7 @@ public class ProgramDTOConverter extends DTOConverter<MentorshipProgramDTO, Ment
 						entity.getGroups().stream().map(groupConverter::toDTO).collect(Collectors.toList()));
 				
 			}
-			result.setGroupDTOs(groupDTOs);
+			dto.setGroupDTOs(groupDTOs);
 		}
 		if (isLoaded(entity.getAssignees())) {
 			GenericCollectonDTO<PhaseParticipantAssignmentDTO> assignmentDTOs = new GenericCollectonDTO<PhaseParticipantAssignmentDTO>();
@@ -52,9 +49,9 @@ public class ProgramDTOConverter extends DTOConverter<MentorshipProgramDTO, Ment
 						entity.getAssignees().stream().map(assignmentConverter::toDTO).collect(Collectors.toList()));
 				
 			}
-			result.setAssigneeDTOs(assignmentDTOs);
+			dto.setAssigneeDTOs(assignmentDTOs);
 		}
-		return result;
+		return dto;
 	}
 	
 }

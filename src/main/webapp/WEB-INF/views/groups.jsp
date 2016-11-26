@@ -42,8 +42,8 @@
 
 				<c:forEach var="group" items="${groups.elements}">
 					<tr>
-						<td>${group.mentorUid}</td>
-						<td>${group.menteeUid}</td>
+						<td>${group.mentorName}</td>
+						<td>${group.menteeName}</td>
 						<td><fmt:formatDate pattern="${dateFormatPattern}"
 								value="${group.plannedStart}" /></td>
 						<td><fmt:formatDate pattern="${dateFormatPattern}"

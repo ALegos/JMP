@@ -19,42 +19,40 @@ public class PersonDTOConverter extends DTOConverter<PersonDTO, Person> {
 	@Autowired
 	public PersonDTOConverter(ModelMapper mapper, PersonService personService,
 			AssignmentDTOConverter assignmentConverter) {
-		this.mapper = mapper;
+		super(mapper);
 		this.personService = personService;
 		this.assignmentConverter = assignmentConverter;
 	}
 	
 	@Override
-	public Person toEntity(PersonDTO dto) {
-		Person result = this.mapper.map(dto, Person.class);
+	protected Person populateEntity(PersonDTO dto, Person entity) {
 		if (dto.getManagerDTO() != null && StringUtils.isNotBlank(dto.getManagerDTO().getUid())) {
-			result.setManager(this.personService.getByUid(dto.getManagerDTO().getUid()));
+			entity.setManager(this.personService.getByUid(dto.getManagerDTO().getUid()));
 		}
 		if (dto.getAssignmentDTO() != null) {
 			if (StringUtils.isNotBlank(dto.getAssignmentDTO().getMentorshipProgramUid())) {
 				dto.getAssignmentDTO().setPersonUid(dto.getUid());
-				result.setAssignment(assignmentConverter.toEntity(dto.getAssignmentDTO()));
+				entity.setAssignment(assignmentConverter.toEntity(dto.getAssignmentDTO()));
 				if (StringUtils.isBlank(dto.getUid())) {
-					result.getAssignment().setPerson(result);
+					entity.getAssignment().setPerson(entity);
 				}
 			} else {
-				result.setAssignment(null);
+				entity.setAssignment(null);
 			}
 		}
 		
-		return result;
+		return entity;
 	}
 	
 	@Override
-	public PersonDTO toDTO(Person entity) {
-		PersonDTO result = this.mapper.map(entity, PersonDTO.class);
+	protected PersonDTO populateDTO(Person entity, PersonDTO dto) {
 		if (isLoaded(entity.getManager())) {
-			result.setManagerDTO(this.mapper.map(entity.getManager(), PersonDTO.class));
+			dto.setManagerDTO(this.toDTO(entity.getManager()));
 		}
 		if (isLoaded(entity.getAssignment())) {
-			result.setAssignmentDTO(assignmentConverter.toDTO(entity.getAssignment()));
+			dto.setAssignmentDTO(assignmentConverter.toDTO(entity.getAssignment()));
 		}
-		return result;
+		return dto;
 	}
 	
 }

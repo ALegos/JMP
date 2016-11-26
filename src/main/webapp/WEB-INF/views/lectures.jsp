@@ -52,7 +52,7 @@
 						<td>${lecture.status}</td>
 						<td><a href="lecture/${lecture.uid}" class="btn btn-info">Update</a>
 							<button class="btn btn-danger"
-								onclick="deletePerson(this,'${person.uid}');">Delete</button></td>
+								onclick="deleteLecture(this,'${person.uid}');">Delete</button></td>
 					</tr>
 				</c:forEach>
 			</table>
